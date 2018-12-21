@@ -24,7 +24,6 @@ class MyFavorite extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    print("createState.........");
     return new MyFavoriteState();
   }
 }
