@@ -8,6 +8,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    // 抽屉
+    Widget userHeader = UserAccountsDrawerHeader(
+      accountName: new Text('Moon'),
+      accountEmail: new Text('moonljt521@gmail.com'),
+      currentAccountPicture: new CircleAvatar(
+        backgroundImage: AssetImage('images/ic_launcher.png'), radius: 35.0,),);
+
     return new MaterialApp(
       title: 'Welcome to Flutter',
       // 设置主题
@@ -24,6 +31,34 @@ class HomePage extends StatelessWidget {
 //          child: new Text(wordPair.asPascalCase),
           child: new RandomWords(),
         ),
+
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              userHeader , // 可在这里替换自定义的header
+              ListTile(title: Text('计算器'),
+                leading: new CircleAvatar(child: new Icon(Icons.computer),),
+                onTap: () {
+                    // 进入计算器
+                    WidgetUtil.showSnackBar(context, "进入计算器");
+
+                },),
+              ListTile(title: Text('待开发功能1'),
+                leading: new CircleAvatar(child: new Text('B2'),),
+                onTap: () {
+//                  Navigator.pop(context);
+                },),
+              ListTile(title: Text('待开发功能2'),
+                leading: new CircleAvatar(
+                  child: new Icon(Icons.list),),
+                onTap: () {
+//                  Navigator.pop(context);
+                },),
+            ],
+          ),
+        ),
+
       ),
     );
   }
@@ -74,7 +109,7 @@ class RandomWordsState extends State<RandomWords> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('单词列表'),
-      
+
         actions: <Widget>[
           new IconButton(
               icon: new Icon(Icons.list)
