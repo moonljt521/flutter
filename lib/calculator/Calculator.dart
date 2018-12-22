@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_first_demo/calculator/CalculatorPage.dart';
 
 /**
  * 计算器
@@ -23,7 +24,7 @@ class CalculatorState extends State<Calculator> {
 
       ),
       body: new Center(
-        child : new Text("计算器")
+        child : new CalculatorPage()
       )
     );
   }

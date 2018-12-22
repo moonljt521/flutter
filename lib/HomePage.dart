@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/Calculator.dart';
+import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/MyDrawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +26,7 @@ class HomePageState extends State<HomePage> {
 
         ),
         body: new Center(
-          child: new Text("MAIN PAGE"),
+          child: new Text("Flutter Demo"),
 
         ),
         drawer: new MyDrawer(),
