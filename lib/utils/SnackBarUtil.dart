@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class WidgetUtil {
+class SnackBarUtil {
 
   static showSnackBar(BuildContext context , String text) {
     final snackBar = SnackBar(content: Text(text) , duration: new Duration(seconds: 1),);

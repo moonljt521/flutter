@@ -103,6 +103,8 @@ class RandomWordsState extends State<ReciteWords> {
       // 添加点击事件 ：  setState方法可以触发UI刷新
       onTap: () {
         setState(() {
+
+
           if (alreadySaved) {
             _saved.remove(pair);
             Toast.toast(context, "您取消收藏了" + pair.toString());

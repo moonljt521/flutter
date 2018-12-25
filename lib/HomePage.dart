@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/calculator/Calculator.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_first_demo/MyDrawer.dart';
+import 'package:flutter_first_demo/utils/SnackBarUtil.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,6 +11,25 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+
+  _showDialog(BuildContext mContext) {
+    showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(content: new Text('退出app'), actions: <Widget>[
+        new FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                SystemNavigator.pop();
+
+              }
+            },
+            child: new Text('确定'))
+      ]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +45,24 @@ class HomePageState extends State<HomePage> {
           title: new Text('主页'),
 
         ),
-        body: new Center(
-          child: new Text("Flutter Demo"),
+        body: WillPopScope(
+            onWillPop:() {
 
-        ),
+              print("_requsetPop....");
+
+              _showDialog(context);
+
+              return new Future.value(false);
+            },
+            child: new Text("qqqq"),
+          ),
         drawer: new MyDrawer(),
-      ),
-    );
+        ),
+      );
   }
 }
+
+
+
+
+
