@@ -3,22 +3,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
+import 'package:flutter_first_demo/login/LoginPage.dart';
 
 
 class MyDrawer extends StatelessWidget {
 
   // 抽屉
-  Widget userHeader = UserAccountsDrawerHeader(
-    accountName: new Text('Moon'),
-    accountEmail: new Text('moonljt521@gmail.com'),
-    currentAccountPicture: new CircleAvatar(
-      backgroundImage: AssetImage('images/ic_launcher.png'),
-      radius: 35.0,
-    ),
-  );
+
 
   @override
   Widget build(BuildContext context) {
+
+    Widget userHeader = UserAccountsDrawerHeader(
+      accountName: GestureDetector(
+        onTap: (){
+          Navigator.of(context).pop();
+          Navigator.of(context).push( MaterialPageRoute(builder: (mContext) =>  LoginPage()));
+        },
+        child: Text("Moon"),
+      ),
+      accountEmail: new Text('moonljt521@gmail.com'),
+      currentAccountPicture: new CircleAvatar(
+        backgroundImage: AssetImage('images/ic_launcher.png'),
+        radius: 35.0,
+      ),
+    );
+
+
     return new Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
