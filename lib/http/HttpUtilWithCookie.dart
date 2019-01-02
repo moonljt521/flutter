@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter_first_demo/http/Api.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpUtil {
   static const String GET = "get";
@@ -19,7 +19,7 @@ class HttpUtil {
     }
 
     if (params != null && params.isNotEmpty) {
-      StringBuffer sb = new StringBuffer("?");
+      StringBuffer sb = StringBuffer("?");
       params.forEach((key, value) {
         sb.write("$key" + "=" + "$value" + "&");
       });
@@ -54,15 +54,15 @@ class HttpUtil {
     int errorCode;
     var data;
     try {
-      Map<String, String> headerMap = headers == null ? new Map() : headers;
-      Map<String, String> paramMap = params == null ? new Map() : params;
+      Map<String, String> headerMap = headers == null ? Map() : headers;
+      Map<String, String> paramMap = params == null ? Map() : params;
 
-      SharedPreferences sp = await SharedPreferences.getInstance();
-      String cookie = sp.get("cookie");
-      if(cookie==null || cookie.length==0){
-      }else{
-        headerMap['Cookie'] = cookie;
-      }
+//      SharedPreferences sp = await SharedPreferences.getInstance();
+//      String cookie = sp.get("cookie");
+//      if(cookie==null || cookie.length==0){
+//      }else{
+//        headerMap['Cookie'] = cookie;
+//      }
 
 
 
@@ -93,11 +93,11 @@ class HttpUtil {
 
 
       //报存登录接口的cookie,写在这里有些不优雅(0-0)
-      if(url.contains(Api.LOGIN)){
-        SharedPreferences sp = await SharedPreferences.getInstance();
-        sp.setString("cookie", res.headers['set-cookie']);
-
-      }
+//      if(url.contains(Api.LOGIN)){
+//        SharedPreferences sp = await SharedPreferences.getInstance();
+//        sp.setString("cookie", res.headers['set-cookie']);
+//
+//      }
 
 
 

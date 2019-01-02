@@ -33,7 +33,7 @@ class HttpUtil {
     }
 
     if (params != null && params.isNotEmpty) {
-      StringBuffer sb = new StringBuffer("?");
+      StringBuffer sb = StringBuffer("?");
       params.forEach((key, value) {
         sb.write("$key" + "=" + "$value" + "&");
       });
@@ -68,8 +68,8 @@ class HttpUtil {
     int errorCode;
     var data;
     try {
-      Map<String, String> headerMap = headers == null ? new Map() : headers;
-      Map<String, String> paramMap = params == null ? new Map() : params;
+      Map<String, String> headerMap = headers == null ? Map() : headers;
+      Map<String, String> paramMap = params == null ? Map() : params;
 
 
       http.Response res;

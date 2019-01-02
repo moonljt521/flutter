@@ -1,16 +1,10 @@
 
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
-import "package:share/share.dart";
-
-import 'package:flutter_share_me/flutter_share_me.dart';
-
 
 class MyDrawer extends StatelessWidget {
 

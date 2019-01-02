@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_first_demo/HomeWidget.dart';
+import 'package:flutter_first_demo/main_page.dart';
 
 class HomePage extends StatelessWidget {
 

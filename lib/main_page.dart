@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/FoundPage.dart';
 import 'package:flutter_first_demo/HomePage.dart';
+import 'package:flutter_first_demo/MinePage.dart';
 import 'package:flutter_first_demo/MyDrawer.dart';
 
 class MainPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _MainState();
+    return _MainState();
   }
 }
 
@@ -20,8 +21,8 @@ class _MainState extends State<MainPage> {
   var _body;
 
   initData() {
-    _body = new IndexedStack(
-      children: <Widget>[ HomePage(), FoundPage(), HomePage()],
+    _body = IndexedStack(
+      children: <Widget>[ HomePage(), FoundPage(), MinePage()],
       index: _tabIndex,
     );
   }
@@ -30,19 +31,19 @@ class _MainState extends State<MainPage> {
   void initState() {
     super.initState();
     _navigationViews = <BottomNavigationBarItem>[
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: const Icon(Icons.home),
-        title: new Text(appBarTitles[0]),
+        title: Text(appBarTitles[0]),
         backgroundColor: Colors.blue,
       ),
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: const Icon(Icons.widgets),
-        title: new Text(appBarTitles[1]),
+        title: Text(appBarTitles[1]),
         backgroundColor: Colors.blue,
       ),
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: const Icon(Icons.person),
-        title: new Text(appBarTitles[2]),
+        title: Text(appBarTitles[2]),
         backgroundColor: Colors.blue,
       ),
     ];
