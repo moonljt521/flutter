@@ -58,7 +58,7 @@ class _MainState extends State<MainPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("main"),
+        title: Text(appBarTitles[_tabIndex]),
       ),
       body: _body,
       drawer: MyDrawer(),
