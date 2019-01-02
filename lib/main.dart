@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blueAccent,
       ),
-      home: HomeWidget(),
+      home: MainPage(),
     );
   }
 }

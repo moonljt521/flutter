@@ -21,6 +21,14 @@ dependencies:
   cupertino_icons: ^0.1.2
   english_words: ^3.1.0  # 包含数千个最常用的英文单词以及一些实用功能.
 
+  share: ^0.5.3
+
+  flutter_share_me: ^0.1.3
+
+  http: '>=0.11.3+12'
+
+  shared_preferences: "^0.4.1"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
