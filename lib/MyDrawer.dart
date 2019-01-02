@@ -20,7 +20,14 @@ class MyDrawer extends StatelessWidget {
           Navigator.of(context).pop();
           Navigator.of(context).push( MaterialPageRoute(builder: (mContext) =>  LoginPage()));
         },
-        child: Text("Moon"),
+        child: Container(
+          padding: EdgeInsets.all(7.0),
+          child: Text("moon",
+            style: TextStyle(
+              fontSize: 20
+            ) ,
+          ),
+        ),
       ),
       accountEmail: new Text('moonljt521@gmail.com'),
       currentAccountPicture: new CircleAvatar(
