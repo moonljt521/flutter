@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_first_demo/home/articel_detail_page.dart';
 import 'package:flutter_first_demo/http/Api.dart';
 import 'package:flutter_first_demo/http/HttpUtil.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/utils/DataUtils.dart';
+import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/StringUtils.dart';
 
 
@@ -51,15 +53,11 @@ class ArticleItemState extends State<ArticleItem> {
   }
 
   void _itemClick(itemData) async {
-    await Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-//      return new ArticleDetailPage(
-//        title: itemData['title'],
-//        url: itemData['link'],
-//      );
 
-      return null;
-
-    }));
+    RouterUtil.routeAnimation(context, ArticleDetaiPage(
+      title: itemData['title'],
+      url: itemData['link'],
+    ));
   }
 
   //收藏/取消收藏

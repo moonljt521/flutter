@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/FoundPage.dart';
-import 'package:flutter_first_demo/HomePage.dart';
+import 'package:flutter_first_demo/home/HomePage.dart';
 import 'package:flutter_first_demo/MinePage.dart';
 import 'package:flutter_first_demo/MyDrawer.dart';
 

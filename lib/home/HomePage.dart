@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/ArticleItem.dart';
+import 'package:flutter_first_demo/home/ArticleItem.dart';
 import 'package:flutter_first_demo/constant/Constants.dart';
 import 'package:flutter_first_demo/http/Api.dart';
 import 'package:flutter_first_demo/http/HttpUtil.dart';
