@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_first_demo/utils/RouterUtil.dart';
 
 class MyFavorite extends StatefulWidget {
 
@@ -74,28 +75,19 @@ class MyFavoriteState extends State<MyFavorite> {
   // 展示一个页面
   void _showWelcomePage(BuildContext context ,String content) {
 
-    Navigator.of(context).push(
-
-      new MaterialPageRoute(
-
-        builder: (context) {
-          return new Scaffold(
-            appBar: new AppBar(
-              title: new Text(
-                'WELCOME YOU~~~',
-                textAlign: TextAlign.center,),
-            ),
-            body: new Text(
-              content,
-              textAlign: TextAlign.center,
-              textDirection: TextDirection.ltr,
-              style: new TextStyle(color: Colors.red,fontSize: 60 , fontWeight: FontWeight.normal
-                  ,background: new Paint()),),
-          );
-
-        },
+    RouterUtil.route(context, Scaffold(
+      appBar: new AppBar(
+        title: new Text(
+          'WELCOME YOU~~~',
+          textAlign: TextAlign.center,),
       ),
-    );
+      body: new Text(
+        content,
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
+        style: new TextStyle(color: Colors.red,fontSize: 60 , fontWeight: FontWeight.normal
+            ,background: new Paint()),),
+    ));
   }
 
 }

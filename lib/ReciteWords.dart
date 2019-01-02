@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/MyFavorite.dart';
+import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
 
 /**
@@ -30,17 +31,11 @@ class RandomWordsState extends State<ReciteWords> {
     // 导航按钮 click
     _navigationMyFavouritePage(BuildContext mContext ,Set<WordPair> _saved) {
 
-      Navigator.of(mContext).push(
+      RouterUtil.route(context, MyFavorite(
+        title: "我的收藏",
+        mSaved: _saved,
+      ));
 
-        new MaterialPageRoute(
-          builder: (mContext) {
-            return new MyFavorite(
-              title: "我的收藏",
-              mSaved: _saved,
-            );
-          },
-        ),
-      );
     }
 
     return new Scaffold(
@@ -103,7 +98,6 @@ class RandomWordsState extends State<ReciteWords> {
       // 添加点击事件 ：  setState方法可以触发UI刷新
       onTap: () {
         setState(() {
-
 
           if (alreadySaved) {
             _saved.remove(pair);

@@ -17,9 +17,9 @@ class LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('主页'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('主页'),
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
