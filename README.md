@@ -10,8 +10,8 @@
  其中drawer里包含了两个小demo，一个是计算器一个是单词收藏列表
 
 ## 示例图片
-![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/1.jpg?raw=true=200x)
-![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/2.png?raw=true)
-![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/3.png?raw=true)
-![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/4.png?raw=true)
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/1.jpg?raw=true)  
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/2.png?raw=true)  
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/3.png?raw=true)  
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/4.png?raw=true)  
 ![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/5.png?raw=true)
