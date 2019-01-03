@@ -104,21 +104,21 @@ class LoginState extends State<LoginPage> {
     print(">>>>" + pwd);
 
     if(loginName == ""){
-      Toast.toast(context, "请输入用户名");
+      Toast.toast( "请输入用户名");
       return;
     }
 
     if(pwd == ""){
-      Toast.toast(context, "请输入密码");
+      Toast.toast( "请输入密码");
       return;
     }
 
     if (loginName != "ljt") {
-      Toast.toast(context, "用户名不正确");
+      Toast.toast( "用户名不正确");
     } else if (pwd != "123") {
-      Toast.toast(context, "密码不正确");
+      Toast.toast( "密码不正确");
     } else {
-      Toast.toast(context, "恭喜你");
+      Toast.toast( "恭喜你");
     }
   }
 

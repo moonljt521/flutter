@@ -1,12 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_first_demo/plugin/my_flutter_plugin.dart';
 
 class Toast {
   static OverlayEntry _overlayEntry; //toast靠它加到屏幕上
   static bool _showing = false; //toast是否正在showing
   static DateTime _startedTime; //开启一个新toast的当前时间，用于对比是否已经展示了足够时间
   static String _msg;
-  static void toast(
+
+
+  static void toast(String msg){
+    MyFlutterPlugin.showToast(msg);
+  }
+
+  static void toastView(
       BuildContext context,
       String msg,
       ) async {

@@ -79,7 +79,7 @@ class SlideViewState extends State<SlideView>
   }
 
   void _handOnItemClick(itemData) {
-    Toast.toast(context, "SlideView.dart_handOnItemClick");
+    Toast.toast( "SlideView.dart_handOnItemClick");
     RouterUtil.routeAnimation(context, ArticleDetaiPage(
       title: itemData['title'],
       url: itemData['link'],

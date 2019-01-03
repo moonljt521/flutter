@@ -48,7 +48,7 @@ class RandomWordsState extends State<ReciteWords> {
               , onPressed:(){
                 if(_saved.isEmpty){
 
-                  Toast.toast(context, "您还没有收藏单词");
+                  Toast.toast("您还没有收藏单词");
 
                   return;
                 }
@@ -101,11 +101,11 @@ class RandomWordsState extends State<ReciteWords> {
 
           if (alreadySaved) {
             _saved.remove(pair);
-            Toast.toast(context, "您取消收藏了" + pair.toString());
+            Toast.toast("您取消收藏了" + pair.toString());
+
           } else {
             _saved.add(pair);
-            Toast.toast(context, "您收藏了" + pair.toString());
-
+            Toast.toast("您收藏了" + pair.toString());
           }
         });
       },
