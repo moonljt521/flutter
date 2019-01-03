@@ -2,16 +2,19 @@
 
 A new Flutter application.
 
-## Getting Started
+# 一个flutter入门的demo，集成了一些功能，包括：
+# listview 的使用；
+# 请求的使用；
+# bottomNavigator的使用；
+# router 的使用和封装；
+# drawer 的使用；
+# 简单的页面切换转场动画的使用；
+# flutter 调用android原生的功能，目前只写了一个调用原生的toast，其他的类似；
+# 正式打apk包的功能
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
-# flutter
+## 示例图片
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/1.jpg?raw=true)
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/2.png?raw=true)
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/3.png?raw=true)
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/4.png?raw=true)
+![Image text](https://github.com/moonljt521/flutter/blob/master/sampleimages/5.png?raw=true)
