@@ -13,9 +13,7 @@ class MyFlutterPlugin {
 
   // toast 调用原生
   static Future showToast(String message) {
-    _channel.invokeMethod('toast',
-      {"message" : message}
-    );
+    _channel.invokeMethod('toast', {"message" : message});
   }
 
 }

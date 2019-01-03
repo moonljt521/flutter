@@ -13,6 +13,7 @@ class Toast {
     MyFlutterPlugin.showToast(msg);
   }
 
+  @deprecated
   static void toastView(
       BuildContext context,
       String msg,
