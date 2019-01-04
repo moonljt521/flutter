@@ -1,10 +1,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
+import 'package:flutter_first_demo/datepicker/datepicker.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
+
+//import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -69,12 +73,15 @@ class MyDrawer extends StatelessWidget {
 
           ),
           ListTile(
-            title: Text('待开发功能2'),
+            title: Text('日历'),
             leading: CircleAvatar(
               child: Icon(Icons.list),
             ),
             onTap: () {
-//                  Navigator.pop(context);
+              Navigator.of(context).pop();
+
+              RouterUtil.routeAnimation(context, DatePickerPage());
+
             },
           ),
           ListTile(

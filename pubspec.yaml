@@ -24,6 +24,8 @@ dependencies:
 #  shared_preferences: "^0.4.1"
   event_bus: "^1.0.1"
   flutter_webview_plugin: "^0.2.1+2"
+#  日历
+  flutter_cupertino_date_picker: "^0.3.0"
 
 dev_dependencies:
   flutter_test:
