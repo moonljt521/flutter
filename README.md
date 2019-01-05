@@ -7,7 +7,11 @@
  简单的页面切换转场动画的使用；  
  flutter 调用android原生的功能，目前只写了一个调用原生的toast，其他的类似；  
  正式打apk包的功能  
- 其中drawer里包含了两个小demo，一个是计算器一个是单词收藏列表
+ 其中drawer里包含若干demo：
+
+#### 计算器
+#### 单词收藏列表
+#### datepicker
 
 ## 示例图片
 <img src="https://github.com/moonljt521/flutter/blob/master/sampleimages/1.jpg?raw=true" width="400"/>  
