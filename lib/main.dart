@@ -16,6 +16,9 @@ class HomePage extends StatelessWidget {
         primaryColor: Colors.blueAccent,
       ),
       home: MainPage(),
+
+      // 去掉 标题栏"debug" 标志
+//      debugShowCheckedModeBanner: false,
     );
   }
 }
