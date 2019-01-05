@@ -24,9 +24,25 @@ class _ArticleState extends State<ArticleDetaiPage> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
 
   @override
-  Widget build(BuildContext context) {
-    print(">>>>>>>>" + widget.url);
+  void initState() {
+    super.initState();
+    flutterWebViewPlugin.onStateChanged.listen((state) {
+      debugPrint('state:_' + state.type.toString());
+      if (state.type == WebViewState.finishLoad) {
+        // 加载完成
+        setState(() {
+          isLoad = false;
+        });
+      } else if (state.type == WebViewState.startLoad) {
+        setState(() {
+          isLoad = true;
+        });
+      }
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return WebviewScaffold(
       url: widget.url,
       appBar: AppBar(

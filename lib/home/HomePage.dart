@@ -22,12 +22,14 @@ class _HomePageState extends State<HomePage> {
   var curPage = 0;
   var listTotalSize = 0;
 
+  var isLoading = false;
+
   ScrollController _contraller = ScrollController();
   TextStyle titleTextStyle = TextStyle(fontSize: 15.0);
   TextStyle subtitleTextStyle =
   TextStyle(color: Colors.blue, fontSize: 12.0);
 
-  HomeListPageState() {
+  _HomePageState() {
     _contraller.addListener(() {
       var maxScroll = _contraller.position.maxScrollExtent;
       var pixels = _contraller.position.pixels;
@@ -53,6 +55,10 @@ class _HomePageState extends State<HomePage> {
 
 
   Future<Null> _pullToRefresh() async {
+    setState(() {
+      isLoading = true;
+    });
+
     curPage = 0;
     getBanner();
     getHomeArticlelist();
@@ -72,7 +78,20 @@ class _HomePageState extends State<HomePage> {
         controller: _contraller,
       );
 
-      return RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+
+          Expanded(
+            child: RefreshIndicator(backgroundColor: Colors.blue,child: listView, onRefresh: _pullToRefresh),
+            flex: 1,
+          ),
+
+          isLoading ? LinearProgressIndicator() : Container(child: Divider(height: 1,),height: 1,)
+    ],
+      ) ;
+
     }
   }
 
@@ -92,11 +111,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getHomeArticlelist() {
+
+    setState(() {
+      isLoading = true;
+    });
+
     String url = Api.ARTICLE_LIST;
     url += "$curPage/json";
 
     HttpUtil.get(url, (data) {
       if (data != null) {
+
         Map<String, dynamic> map = data;
 
         var _listData = map['datas'];
@@ -104,7 +129,9 @@ class _HomePageState extends State<HomePage> {
         listTotalSize = map["total"];
 
         setState(() {
-          List list1 = List();
+          isLoading = false;
+
+          var list1 = List();
           if (curPage == 0) {
             listData.clear();
           }

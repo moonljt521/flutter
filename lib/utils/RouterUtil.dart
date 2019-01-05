@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /**
- * route 封装
+ * router 封装
  */
 class RouterUtil {
   static route(BuildContext context, Widget targetWidget) {
@@ -25,6 +25,6 @@ class _MyCustomRoute<T> extends MaterialPageRoute<T> {
       Animation<double> secondaryAnimation, Widget child) {
     if (settings.isInitialRoute) return child;
     return RotationTransition(turns: animation, child: child);
-    return FadeTransition(opacity: animation, child: child);
+//    return FadeTransition(opacity: animation, child: child);
   }
 }

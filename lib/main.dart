@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return MaterialApp(
-      title: 'Welcome to Flutter',
+      title: 'Moon Flutter',
       // 设置主题
       theme: ThemeData(
         primaryColor: Colors.blueAccent,
