@@ -25,6 +25,9 @@ class _MainState extends State<MainPage> {
       children: <Widget>[ HomePage(), FoundPage(), MinePage()],
       index: _tabIndex,
     );
+
+//    var x = (-10) % 3;
+//    print(x);
   }
 
   @override

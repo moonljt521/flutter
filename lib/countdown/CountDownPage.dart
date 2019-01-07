@@ -30,14 +30,11 @@ class CountDownState extends State<CountDownPage> implements OnSkipClickListener
         Container(
           color: Colors.white,
           child: Image.network(
-            "",
+//            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547453837&di=7437232d0e17299aae81db64787a984b&imgtype=jpg&er=1&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201812%2F10%2F231855basa2bkay3yv3jsg.jpg',
+            'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3430517011,2018229434&fm=26&gp=0.jpg',
             fit: BoxFit.cover,
           ),
           constraints: BoxConstraints.expand(),
-        ),
-        Image.network(
-          'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3430517011,2018229434&fm=26&gp=0.jpg',
-          fit: BoxFit.fitWidth,
         ),
         Container(
           child: Align(
@@ -63,9 +60,7 @@ class CountDownState extends State<CountDownPage> implements OnSkipClickListener
 
   @override
   void onSkipClick() {
-    print("onSkipClick.....");
     Navigator.of(context).pop();
-    RouterUtil.route4Animation(context, LoginPage(),2);
   }
 
 }

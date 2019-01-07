@@ -27,7 +27,7 @@ class RouterUtil {
 
 class _MyCustomRoute<T> extends MaterialPageRoute<T> {
 
-  num mType = 1;
+  num mType = 2;
 
   _MyCustomRoute({WidgetBuilder builder, RouteSettings settings , var type})
       : super(builder: builder, settings: settings);

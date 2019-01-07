@@ -87,13 +87,13 @@ class MyDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            title: Text('倒计时'),
+            title: Text('模拟闪屏页'),
             leading: CircleAvatar(
               child: Icon(Icons.access_time),
             ),
             onTap: () {
               Navigator.of(context).pop();
-              RouterUtil.routeAnimation(context, CountDownPage());
+              RouterUtil.route4Animation(context, CountDownPage(),RouterUtil.FADE);
 
             },
           ),

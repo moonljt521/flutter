@@ -129,6 +129,10 @@ class _SkipDownTimeProgressState extends State<SkipDownTimeProgress>
     double.parse(((animationController.value * 360) ~/ 1).toString());
     setState(() {
       curAngle = (360.0 - ange);
+      print(" curAnge = " + curAngle.toString());
+      if(curAngle == 1){
+        curAngle = 0;
+      }
     });
   }
 
