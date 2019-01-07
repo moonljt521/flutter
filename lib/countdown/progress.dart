@@ -15,11 +15,11 @@ class _DrawProgress extends CustomPainter {
 
   _DrawProgress(this.color, this.radius,
       {double this.angle, AnimationController this.animation}) {
-    circleFillPaint = new Paint();
+    circleFillPaint = Paint();
     circleFillPaint.color = Colors.white;
     circleFillPaint.style = PaintingStyle.fill;
 
-    progressPaint = new Paint();
+    progressPaint = Paint();
     progressPaint.color = color;
     progressPaint.style = PaintingStyle.stroke;
     progressPaint.strokeCap = StrokeCap.round;
@@ -34,7 +34,7 @@ class _DrawProgress extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     double x = size.width / 2;
     double y = size.height / 2;
-    Offset center = new Offset(x, y);
+    Offset center = Offset(x, y);
     canvas.drawCircle(center, radius - 2, circleFillPaint);
     rect = Rect.fromCircle(center: center, radius: radius);
     angle = angle * (-1);
@@ -43,7 +43,7 @@ class _DrawProgress extends CustomPainter {
     print("draw paint-------------------= $startAngle, $sweepAngle");
     // canvas.drawArc(rect, startAngle, sweepAngle, false, progressPaint);
     //1.0.0之后换种绘制圆弧的方式:
-    Path path = new Path();
+    Path path = Path();
     path.arcTo(rect, startAngle, sweepAngle, true);
     canvas.drawPath(path, progressPaint);
   }
@@ -74,7 +74,7 @@ class SkipDownTimeProgress extends StatefulWidget {
 
   @override
   _SkipDownTimeProgressState createState() {
-    return new _SkipDownTimeProgressState();
+    return _SkipDownTimeProgressState();
   }
 }
 
@@ -88,7 +88,7 @@ class _SkipDownTimeProgressState extends State<SkipDownTimeProgress>
     super.initState();
     print('initState----------------------');
     animationController =
-    new AnimationController(vsync: this, duration: widget.duration);
+    AnimationController(vsync: this, duration: widget.duration);
     animationController.addListener(_change);
     _doAnimation();
   }
@@ -114,7 +114,7 @@ class _SkipDownTimeProgressState extends State<SkipDownTimeProgress>
   }
 
   void _doAnimation() async {
-    Future.delayed(new Duration(milliseconds: 50), () {
+    Future.delayed(Duration(milliseconds: 50), () {
       if(mounted) {
         animationController.forward().orCancel;
       }else {
@@ -134,14 +134,14 @@ class _SkipDownTimeProgressState extends State<SkipDownTimeProgress>
 
   @override
   Widget build(BuildContext context) {
-    return new GestureDetector(
+    return GestureDetector(
       onTap: _onSkipClick,
-      child: new Stack(
+      child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          new CustomPaint(
+          CustomPaint(
             painter:
-            new _DrawProgress(widget.color, widget.radius, angle: curAngle),
+            _DrawProgress(widget.color, widget.radius, angle: curAngle),
             size: widget.size,
           ),
           Text(

@@ -42,7 +42,7 @@ class MyFavoriteState extends State<MyFavorite> {
     final tiles = widget.mSaved.map(
           (pair) {
         return new ListTile(
-            title: new Text(
+            title: Text(
               pair.asPascalCase,
             ),
             onTap:(){

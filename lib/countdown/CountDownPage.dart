@@ -16,7 +16,6 @@ class CountDownState extends State<CountDownPage> implements OnSkipClickListener
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 5),(){
       onSkipClick();
@@ -36,8 +35,8 @@ class CountDownState extends State<CountDownPage> implements OnSkipClickListener
           ),
           constraints: BoxConstraints.expand(),
         ),
-        Image.asset(
-          '../../sampleimages/1.jpg',
+        Image.network(
+          'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3430517011,2018229434&fm=26&gp=0.jpg',
           fit: BoxFit.fitWidth,
         ),
         Container(
@@ -66,7 +65,7 @@ class CountDownState extends State<CountDownPage> implements OnSkipClickListener
   void onSkipClick() {
     print("onSkipClick.....");
     Navigator.of(context).pop();
-    RouterUtil.routeAnimation(context, LoginPage());
+    RouterUtil.route4Animation(context, LoginPage(),2);
   }
 
 }

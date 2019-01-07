@@ -21,9 +21,9 @@ class RandomWordsState extends State<ReciteWords> {
   final _suggestions = <WordPair>[];
 
   // 存储收藏过的单词对 （set）
-  final _saved = new Set<WordPair>();
+  final _saved = Set<WordPair>();
 
-  final TextStyle _biggerFont = new TextStyle(fontSize: 18.0);
+  final TextStyle _biggerFont = TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +38,13 @@ class RandomWordsState extends State<ReciteWords> {
 
     }
 
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('单词列表'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('单词列表'),
 
         actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.list)
+          IconButton(
+              icon: Icon(Icons.list)
               , onPressed:(){
                 if(_saved.isEmpty){
 
@@ -66,10 +66,10 @@ class RandomWordsState extends State<ReciteWords> {
 
 
   Widget _buildSuggestions() {
-    return new ListView.builder(
+    return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, i) {
-        if (i.isOdd) return new Divider();
+        if (i.isOdd) return Divider();
 
         final index = i ~/ 2;
         if (index >= _suggestions.length) {
@@ -86,12 +86,12 @@ class RandomWordsState extends State<ReciteWords> {
     // 检测是否已经存储
     final alreadySaved = _saved.contains(pair);
 
-    return new ListTile(
-      title: new Text(
+    return ListTile(
+      title: Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
-      trailing: new Icon(
+      trailing: Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ),
