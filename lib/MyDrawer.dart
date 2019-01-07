@@ -50,7 +50,7 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          userHeader, // 可在这里替换自定义的header
+          userHeader,
           ListTile(
               title: Text('计算器'),
               leading: CircleAvatar(
@@ -58,7 +58,10 @@ class MyDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.of(context).pop();
-                RouterUtil.routeAnimation(context, Calculator());
+
+                Future.delayed(Duration(seconds: 40), goTo(context) );
+
+
               }
           ),
           ListTile(
@@ -103,5 +106,9 @@ class MyDrawer extends StatelessWidget {
     );;
   }
 
+  goTo(BuildContext context){
+    print("111112");
+    RouterUtil.routeAnimation(context, Calculator());
+  }
 
 }
