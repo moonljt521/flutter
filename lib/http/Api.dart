@@ -1,6 +1,7 @@
 class Api {
 
   static const String BaseUrl = "http://www.wanandroid.com/";
+  static const String BaseUrl_news = "http://v.juhe.cn/";
 
   //首页banner
   static const   String BANNER = "banner/json";
@@ -31,6 +32,7 @@ class Api {
   static const   String FRIEND = "friend/json";
   //搜索热词
   static const   String HOTKEY = "hotkey/json";
+
 
 
 

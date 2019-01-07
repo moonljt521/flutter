@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/FoundPage.dart';
+import 'package:flutter_first_demo/news/NewsPage.dart';
 import 'package:flutter_first_demo/home/HomePage.dart';
 import 'package:flutter_first_demo/MinePage.dart';
 import 'package:flutter_first_demo/MyDrawer.dart';
@@ -16,13 +16,13 @@ class _MainState extends State<MainPage> {
 
   int _tabIndex = 0;
   List<BottomNavigationBarItem> _navigationViews;
-  var appBarTitles = ['首页', '发现', '我的'];
+  var appBarTitles = ['首页', '新闻', '我的'];
 
   var _body;
 
   initData() {
     _body = IndexedStack(
-      children: <Widget>[ HomePage(), FoundPage(), MinePage()],
+      children: <Widget>[ HomePage(), NewsPage(), MinePage()],
       index: _tabIndex,
     );
 

@@ -22,6 +22,7 @@ class HttpUtil {
   static const String GET = "get";
   static const String POST = "post";
 
+  static const String NEWS_KEY = "8fd68d6e5c7d4eddbe029b4099d26499";
 
   static void get(String url, Function callback,
       {Map<String, String> params,
