@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
+import 'package:flutter_first_demo/countdown/CountDownPage.dart';
 import 'package:flutter_first_demo/datepicker/datepicker.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
-
+import 'package:flutter/scheduler.dart';
 //import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -58,10 +59,7 @@ class MyDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.of(context).pop();
-
-                Future.delayed(Duration(seconds: 40), goTo(context) );
-
-
+                RouterUtil.routeAnimation(context, Calculator());
               }
           ),
           ListTile(
@@ -87,6 +85,19 @@ class MyDrawer extends StatelessWidget {
 
             },
           ),
+
+          ListTile(
+            title: Text('倒计时'),
+            leading: CircleAvatar(
+              child: Icon(Icons.access_time),
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              RouterUtil.routeAnimation(context, CountDownPage());
+
+            },
+          ),
+          
           ListTile(
             title: Text('Share'),
             leading: CircleAvatar(
