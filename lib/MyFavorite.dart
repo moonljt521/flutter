@@ -24,7 +24,7 @@ class MyFavorite extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new MyFavoriteState();
+    return MyFavoriteState();
   }
 }
 
@@ -41,7 +41,7 @@ class MyFavoriteState extends State<MyFavorite> {
 
     final tiles = widget.mSaved.map(
           (pair) {
-        return new ListTile(
+        return ListTile(
             title: Text(
               pair.asPascalCase,
             ),
@@ -62,12 +62,12 @@ class MyFavoriteState extends State<MyFavorite> {
         color: Colors.yellow // 间隔线颜色
     ).toList();
 
-    return new Scaffold(
+    return Scaffold(
 
-      appBar: new AppBar(
-        title: new Text('我的收藏'),
+      appBar: AppBar(
+        title: Text('我的收藏'),
       ),
-      body: new ListView(children: divided),
+      body: ListView(children: divided),
     );
   }
 
@@ -76,17 +76,17 @@ class MyFavoriteState extends State<MyFavorite> {
   void _showWelcomePage(BuildContext context ,String content) {
 
     RouterUtil.route(context, Scaffold(
-      appBar: new AppBar(
-        title: new Text(
+      appBar: AppBar(
+        title: Text(
           'WELCOME YOU~~~',
           textAlign: TextAlign.center,),
       ),
-      body: new Text(
+      body: Text(
         content,
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr,
-        style: new TextStyle(color: Colors.red,fontSize: 60 , fontWeight: FontWeight.normal
-            ,background: new Paint()),),
+        style: TextStyle(color: Colors.red,fontSize: 60 , fontWeight: FontWeight.normal
+            ,background: Paint()),),
     ));
   }
 

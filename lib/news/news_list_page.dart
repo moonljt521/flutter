@@ -24,7 +24,7 @@ class NewsListPage extends StatefulWidget {
 
 class NewsListState extends State<NewsListPage> with AutomaticKeepAliveClientMixin{
 
-  List listData = List();
+  var listData ;
 
   @override
   void initState() {
@@ -34,10 +34,19 @@ class NewsListState extends State<NewsListPage> with AutomaticKeepAliveClientMix
 
   @override
   Widget build(BuildContext context) {
-      return ListView.builder(
-        itemCount: listData.length,
-        itemBuilder: (context, i) => buildItem(i),
-      );
+      if(listData is ErrorBody){
+        return Center(
+          child : Text((listData as ErrorBody).errorMsg , style: TextStyle(fontSize: 15.0, color: Colors.black12), ),
+        );
+      }else if(listData is List){
+        return ListView.builder(
+          itemCount: (listData as List).length,
+          itemBuilder: (context, i) => buildItem(i),
+        );
+      }else {
+        return Text("");
+      }
+
   }
 
   Widget buildItem(int i) {
@@ -87,7 +96,7 @@ class NewsListState extends State<NewsListPage> with AutomaticKeepAliveClientMix
            listData = data;
          });
        }
-    });
+    }  );
   }
 
   @override

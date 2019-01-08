@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_first_demo/http/Api.dart';
+import 'package:flutter_first_demo/utils/Toast.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
@@ -112,6 +113,17 @@ class HttpUtil {
           }
         }
       }else if(source == SOURCE_JUHE){
+        var reason = map['reason'];
+        if(reason != null){
+          print(reason);
+          Toast.toast(reason);
+          ErrorBody errorBody = ErrorBody();
+          errorBody.type = -1;
+          errorBody.errorMsg = reason;
+          callback(errorBody);
+          return;
+        }
+
         data = map['result'];
         if(data != null){
          var list = callback(data['data']);
@@ -131,4 +143,10 @@ class HttpUtil {
     }
     print("errorMsg :"+errorMsg);
   }
+}
+
+
+class ErrorBody {
+   num type ;
+   String errorMsg;
 }

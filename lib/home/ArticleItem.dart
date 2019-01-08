@@ -31,7 +31,7 @@ class ArticleItem extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new ArticleItemState();
+    return ArticleItemState();
   }
 }
 
@@ -47,8 +47,8 @@ class ArticleItemState extends State<ArticleItem> {
   }
 
   _login() {
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new LoginPage();
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return LoginPage();
     }));
   }
 
@@ -80,51 +80,51 @@ class ArticleItemState extends State<ArticleItem> {
   Widget build(BuildContext context) {
     bool isCollect = widget.itemData["collect"];
 
-    Row row1 = new Row(
+    Row row1 = Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        new Expanded(
-            child: new Row(
+        Expanded(
+            child: Row(
           children: <Widget>[
-            new Text('作者:  '),
-            new Text(
+            Text('作者:  '),
+            Text(
               widget.itemData['author'],
-              style: new TextStyle(color: Theme.of(context).accentColor),
+              style: TextStyle(color: Theme.of(context).accentColor),
             ),
           ],
         )),
-        new Text(widget.itemData['niceDate'])
+        Text(widget.itemData['niceDate'])
       ],
     );
 
-    Row title = new Row(
+    Row title = Row(
       children: <Widget>[
-        new Expanded(
-          child: new Text.rich(
+        Expanded(
+          child: Text.rich(
             widget.isSearch
                 ? StringUtils.getTextSpan(widget.itemData['title'], widget.id)
-                : new TextSpan(text: widget.itemData['title']),
+                : TextSpan(text: widget.itemData['title']),
             softWrap: true,
-            style: new TextStyle(fontSize: 16.0, color: Colors.black),
+            style: TextStyle(fontSize: 16.0, color: Colors.black),
             textAlign: TextAlign.left,
           ),
         )
       ],
     );
 
-    Row chapterName = new Row(
+    Row chapterName = Row(
 //      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        new Expanded(
-          child: new Text(
+        Expanded(
+          child: Text(
             widget.isSearch ? '' : widget.itemData['chapterName'],
             softWrap: true,
-            style: new TextStyle(color: Theme.of(context).accentColor),
+            style: TextStyle(color: Theme.of(context).accentColor),
             textAlign: TextAlign.left,
           ),
         ),
-        new GestureDetector(
-          child: new Icon(
+        GestureDetector(
+          child: Icon(
             isCollect ? Icons.favorite : Icons.favorite_border,
             color: isCollect ? Colors.red : null,
           ),
@@ -135,26 +135,26 @@ class ArticleItemState extends State<ArticleItem> {
       ],
     );
 
-    Column column = new Column(
+    Column column = Column(
       children: <Widget>[
-        new Padding(
+        Padding(
           padding: EdgeInsets.all(10.0),
           child: row1,
         ),
-        new Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
           child: title,
         ),
-        new Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
           child: chapterName,
         ),
       ],
     );
 
-    return new Card(
+    return Card(
       elevation: 4.0,
-      child: new InkWell(
+      child: InkWell(
         child: column,
         onTap: () {
           _itemClick(widget.itemData);

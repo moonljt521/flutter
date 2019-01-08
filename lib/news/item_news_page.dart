@@ -2,6 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_first_demo/home/articel_detail_page.dart';
+import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
 
 class ItemNewsWidget extends StatefulWidget {
@@ -28,15 +30,17 @@ class ItemNewsState extends State<ItemNewsWidget> {
           elevation: 4,
           child: InkWell(
             onTap: (){
-              
-              Toast.toast(widget.itemData['url']);
-              
+              RouterUtil.routeAnimation(context, ArticleDetaiPage(
+                title: widget.itemData['title'],
+                url: widget.itemData['url'],
+              ));
+
             },
             child: Column(
               children: <Widget>[
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-
                     Expanded(
                       flex: 1,
                       child: Container(

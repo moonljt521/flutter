@@ -16,16 +16,16 @@ class NewsPage extends StatefulWidget {
 class _FoundPageState extends State<NewsPage> with AutomaticKeepAliveClientMixin {
 
   final List<NewsTabLayout> myTabs = <NewsTabLayout>[
-    new NewsTabLayout(type: 'top',content: '头条'),
-    new NewsTabLayout(type: 'shehui',content: '社会'),
-    new NewsTabLayout(type: 'guonei',content: '国内'),
-    new NewsTabLayout(type: 'guoji',content: '国际'),
-    new NewsTabLayout(type: 'yule',content: '娱乐'),
-    new NewsTabLayout(type: 'tiyu',content: '体育'),
-    new NewsTabLayout(type: 'junshi',content: '军事'),
-    new NewsTabLayout(type: 'keji',content: '科技'),
-    new NewsTabLayout(type: 'caijing',content: '财经'),
-    new NewsTabLayout(type: 'shishang',content: '时尚'),
+    NewsTabLayout(type: 'top',content: '头条'),
+    NewsTabLayout(type: 'shehui',content: '社会'),
+    NewsTabLayout(type: 'guonei',content: '国内'),
+    NewsTabLayout(type: 'guoji',content: '国际'),
+    NewsTabLayout(type: 'yule',content: '娱乐'),
+    NewsTabLayout(type: 'tiyu',content: '体育'),
+    NewsTabLayout(type: 'junshi',content: '军事'),
+    NewsTabLayout(type: 'keji',content: '科技'),
+    NewsTabLayout(type: 'caijing',content: '财经'),
+    NewsTabLayout(type: 'shishang',content: '时尚'),
 
   ];
 
