@@ -13,7 +13,7 @@ class NewsPage extends StatefulWidget {
   }
 }
 
-class _FoundPageState extends State<NewsPage> with SingleTickerProviderStateMixin {
+class _FoundPageState extends State<NewsPage> with AutomaticKeepAliveClientMixin {
 
   final List<NewsTabLayout> myTabs = <NewsTabLayout>[
     new NewsTabLayout(type: 'top',content: '头条'),
@@ -29,14 +29,12 @@ class _FoundPageState extends State<NewsPage> with SingleTickerProviderStateMixi
 
   ];
 
+  @override
+  bool get wantKeepAlive => true;
 
-  TabController _tabController ;
-  
   @override
   void initState() {
     super.initState();
-//    todo
-    _tabController = TabController(length: myTabs.length, vsync: ScrollableState());
 
   }
 
@@ -54,14 +52,12 @@ class _FoundPageState extends State<NewsPage> with SingleTickerProviderStateMixi
                 labelColor: Colors.black87,
                 unselectedLabelColor: Colors.blueGrey,
                 tabs: myTabs,
-                controller: _tabController,
                 isScrollable: true,
               ),
 
               Expanded(
                 flex: 1,
                 child: TabBarView(
-                  controller: _tabController,
                   children: myTabs.map((NewsTabLayout tab) {
                     return NewsListPage(type:tab.type);
                   }).toList(),
@@ -73,5 +69,4 @@ class _FoundPageState extends State<NewsPage> with SingleTickerProviderStateMixi
         ),
       );
   }
-  
 }
