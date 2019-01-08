@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
   void getBanner() {
     String bannerUrl = Api.BANNER;
 
-    HttpUtil.get(bannerUrl, (data) {
+    HttpUtil.get(bannerUrl, HttpUtil.SOURCE_HONGYUANG, (data) {
       if (data != null) {
         setState(() {
           bannerData = data;
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
     String url = Api.ARTICLE_LIST;
     url += "$curPage/json";
 
-    HttpUtil.get(url, (data) {
+    HttpUtil.get(url, HttpUtil.SOURCE_HONGYUANG, (data) {
       if (data != null) {
 
         Map<String, dynamic> map = data;

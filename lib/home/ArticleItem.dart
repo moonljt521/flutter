@@ -69,7 +69,7 @@ class ArticleItemState extends State<ArticleItem> {
       url = Api.COLLECT;
     }
     url += '${itemData["id"]}/json';
-    HttpUtil.post(url, (data) {
+    HttpUtil.post(url, HttpUtil.SOURCE_HONGYUANG, (data) {
       setState(() {
         itemData['collect'] = !itemData['collect'];
       });

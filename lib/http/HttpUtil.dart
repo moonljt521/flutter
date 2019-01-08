@@ -24,7 +24,10 @@ class HttpUtil {
 
   static const String NEWS_KEY = "8fd68d6e5c7d4eddbe029b4099d26499";
 
-  static void get(String url, Function callback,
+  static const num SOURCE_HONGYUANG = 1;
+  static const num SOURCE_JUHE = 2;
+
+  static void get(String url, num source ,Function callback,
       {Map<String, String> params,
         Map<String, String> headers,
         Function errorCallback}) async {
@@ -42,29 +45,29 @@ class HttpUtil {
       paramStr = paramStr.substring(0, paramStr.length - 1);
       url += paramStr;
     }
-    await _request(url, callback,
+    await _request(url, source , callback,
         method: GET,
         headers: headers,
         errorCallback: errorCallback);
   }
 
-  static void post(String url, Function callback,
+  static void post(String url, num source ,Function callback,
       {Map<String, String> params,
         Map<String, String> headers,
         Function errorCallback}) async {
     if (!url.startsWith("http")) {
       url = Api.BaseUrl + url;
     }
-    await _request(url, callback,
+    await _request(url, source, callback,
         method: POST,
         headers: headers, params: params, errorCallback: errorCallback);
   }
 
-  static Future _request(String url, Function callback,
-      {String method,
+  static Future _request(String url, num source , Function callback,{String method,
         Map<String, String> headers,
         Map<String, String> params,
         Function errorCallback}) async {
+
     String errorMsg;
     int errorCode;
     var data;
@@ -94,20 +97,29 @@ class HttpUtil {
       //记得Map中的泛型为dynamic
       Map<String, dynamic> map = json.decode(res.body);
 
-      errorCode = map['errorCode'];
-      errorMsg = map['errorMsg'];
-      data = map['data'];
+      if(source == SOURCE_HONGYUANG) {
+        errorCode = map['errorCode'];
+        errorMsg = map['errorMsg'];
+        data = map['data'];
 
-
-      // callback返回data,数据类型为dynamic
-      //errorCallback中为了方便我直接返回了String类型的errorMsg
-      if (callback != null) {
-        if (errorCode >= 0) {
-          callback(data);
-        } else {
-          _handError(errorCallback, errorMsg);
+        // callback返回data,数据类型为dynamic
+        //errorCallback中为了方便我直接返回了String类型的errorMsg
+        if (callback != null) {
+          if (errorCode >= 0) {
+            callback(data);
+          } else {
+            _handError(errorCallback, errorMsg);
+          }
+        }
+      }else if(source == SOURCE_JUHE){
+        data = map['result'];
+        if(data != null){
+         var list = callback(data['data']);
+          callback(list);
         }
       }
+
+
     } catch (exception) {
       _handError(errorCallback, exception.toString());
     }
