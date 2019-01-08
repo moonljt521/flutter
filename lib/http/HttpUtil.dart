@@ -116,7 +116,6 @@ class HttpUtil {
         var reason = map['reason'];
         if(reason != null){
           print(reason);
-          Toast.toast(reason);
           ErrorBody errorBody = ErrorBody();
           errorBody.type = -1;
           errorBody.errorMsg = reason;

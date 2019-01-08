@@ -36,7 +36,16 @@ class NewsListState extends State<NewsListPage> with AutomaticKeepAliveClientMix
   Widget build(BuildContext context) {
       if(listData is ErrorBody){
         return Center(
-          child : Text((listData as ErrorBody).errorMsg , style: TextStyle(fontSize: 15.0, color: Colors.black12), ),
+
+          child :
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Icon(Icons.error),
+                Text((listData as ErrorBody).errorMsg , style: TextStyle(fontSize: 15.0, color: Colors.blueGrey),)
+              ],
+            )
+          ,
         );
       }else if(listData is List){
         return ListView.builder(
