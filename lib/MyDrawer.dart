@@ -7,6 +7,7 @@ import 'package:flutter_first_demo/ReciteWords.dart';
 import 'package:flutter_first_demo/countdown/CountDownPage.dart';
 import 'package:flutter_first_demo/datepicker/datepicker.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
+import 'package:flutter_first_demo/test_page.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter/scheduler.dart';
 //import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
@@ -99,16 +100,13 @@ class MyDrawer extends StatelessWidget {
           ),
           
           ListTile(
-            title: Text('Share'),
+            title: Text('test 页面基类'),
             leading: CircleAvatar(
               child: Icon(Icons.share),
             ),
             onTap: () {
-              Navigator.of(context).pop();
-//              Share.share(
-//                  "我的flutter" + (Platform.isAndroid ? "https://play.google.com/store/apps/details?id=com.twodimensions.timeline" : "itms://itunes.apple.com/us/app/apple-store/id1441257460?mt=8"));
 
-//               FlutterShareMe().shareToFacebook(url: "",msg: "1111");
+              RouterUtil.routeAnimation(context, TestWidget());
 
             },
           ),
