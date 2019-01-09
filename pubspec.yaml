@@ -28,7 +28,8 @@ dependencies:
   flutter_cupertino_date_picker: "^0.3.0"
 #  适配
   flutter_screenutil: ^0.3.0
-
+#  ！！！
+  dio: ^1.0.4
 
 dev_dependencies:
   flutter_test:

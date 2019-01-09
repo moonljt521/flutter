@@ -25,6 +25,12 @@ abstract class BaseStatefulWidget extends StatefulWidget {
   void initState() {}
 
   void dispose() {}
+
+  @protected
+  backPopPage(BuildContext context){
+      if(state == null) return;
+     Navigator.pop(context, true);
+  }
 }
 
 class _BaseState extends State<BaseStatefulWidget> {
@@ -47,6 +53,8 @@ class _BaseState extends State<BaseStatefulWidget> {
         title: Text(widget.getTitle() ,style: TextStyle(fontSize: 18,color: Colors.black.withOpacity(1.0))),
         elevation: 1.0,
         centerTitle: true,
+        automaticallyImplyLeading:false
+,
         leading: IconButton(
           alignment: Alignment.centerLeft,
           icon: Icon(Icons.arrow_back_ios),
@@ -54,7 +62,7 @@ class _BaseState extends State<BaseStatefulWidget> {
           color: Colors.black.withOpacity(0.5),
           onPressed: () {
 
-            Navigator.pop(context, true);
+            widget.backPopPage(context);
 
           },
         ),
