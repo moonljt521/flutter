@@ -7,6 +7,7 @@ import 'package:flutter_first_demo/http/Api.dart';
 import 'package:flutter_first_demo/http/HttpUtil.dart';
 import 'package:flutter_first_demo/widget/EndLine.dart';
 import 'package:flutter_first_demo/widget/SlideView.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
 

@@ -17,12 +17,6 @@ class MyFavorite extends StatefulWidget {
   }):super(key:key);
 
   @override
-  initState(){
-    // 此方法不执行 ？？？？？
-    print("initState.........");
-  }
-
-  @override
   State<StatefulWidget> createState() {
     return MyFavoriteState();
   }

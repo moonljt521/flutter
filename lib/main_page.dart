@@ -4,6 +4,7 @@ import 'package:flutter_first_demo/news/NewsPage.dart';
 import 'package:flutter_first_demo/home/HomePage.dart';
 import 'package:flutter_first_demo/MinePage.dart';
 import 'package:flutter_first_demo/MyDrawer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -56,6 +57,8 @@ class _MainState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
     initData();
 

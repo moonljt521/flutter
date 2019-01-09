@@ -26,6 +26,9 @@ dependencies:
   flutter_webview_plugin: "^0.2.1+2"
 #  日历
   flutter_cupertino_date_picker: "^0.3.0"
+#  适配
+  flutter_screenutil: ^0.3.0
+
 
 dev_dependencies:
   flutter_test:

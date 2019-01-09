@@ -6,6 +6,7 @@ import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/utils/DataUtils.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/StringUtils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 ///个人感觉条目比较复杂的话可以单独拿出来,而且可以复用.可以对比CollectListPage.dart中的item哪个更合理
@@ -105,7 +106,7 @@ class ArticleItemState extends State<ArticleItem> {
                 ? StringUtils.getTextSpan(widget.itemData['title'], widget.id)
                 : TextSpan(text: widget.itemData['title']),
             softWrap: true,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
+            style: TextStyle(fontSize: ScreenUtil().setSp(28,false), color: Colors.black),
             textAlign: TextAlign.left,
           ),
         )

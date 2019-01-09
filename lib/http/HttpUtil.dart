@@ -113,20 +113,19 @@ class HttpUtil {
           }
         }
       }else if(source == SOURCE_JUHE){
-        var reason = map['reason'];
-        if(reason != null){
-          print(reason);
-          ErrorBody errorBody = ErrorBody();
-          errorBody.type = -1;
-          errorBody.errorMsg = reason;
-          callback(errorBody);
-          return;
-        }
-
         data = map['result'];
         if(data != null){
-         var list = callback(data['data']);
+          var list = callback(data['data']);
           callback(list);
+        }else {
+          var reason = map['reason'];
+          if(reason != null){
+            print(reason);
+
+            callback(ErrorBody()
+              ..type = -1
+              ..errorMsg = reason);
+          }
         }
       }
 
