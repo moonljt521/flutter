@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/utils/Toast.dart';
-
 
 /**
  *  toolbar  statefulWidget 基类
@@ -9,8 +7,6 @@ import 'package:flutter_first_demo/utils/Toast.dart';
 abstract class BaseStatefulWidget extends StatefulWidget {
 
   State<BaseStatefulWidget> state;
-
-
 
   @protected
   Widget getWidget(BuildContext context);
@@ -20,7 +16,6 @@ abstract class BaseStatefulWidget extends StatefulWidget {
 
   @override
   createState() => _BaseState();
-
 
   void initState() {}
 
@@ -53,21 +48,24 @@ class _BaseState extends State<BaseStatefulWidget> {
         title: Text(widget.getTitle() ,style: TextStyle(fontSize: 18,color: Colors.black.withOpacity(1.0))),
         elevation: 1.0,
         centerTitle: true,
-        automaticallyImplyLeading:false
-,
         leading: IconButton(
           alignment: Alignment.centerLeft,
           icon: Icon(Icons.arrow_back_ios),
           padding: EdgeInsets.only(left: 20.0,),
           color: Colors.black.withOpacity(0.5),
           onPressed: () {
-
             widget.backPopPage(context);
-
           },
         ),
       ),
-      body: widget.getWidget(context),
+      body: new WillPopScope(
+          child: Scaffold(
+            body: widget.getWidget(context)
+          ),
+          onWillPop: () {
+            print("返回键点击了");
+            widget.backPopPage(context);
+          })
     );
   }
 
