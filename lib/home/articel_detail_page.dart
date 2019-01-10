@@ -43,6 +43,7 @@ class _ArticleState extends State<ArticleDetaiPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(">>>>>>>"+widget.url);
     return WebviewScaffold(
       url: widget.url,
       appBar: AppBar(
