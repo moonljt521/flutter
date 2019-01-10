@@ -110,6 +110,16 @@ class MyDrawer extends StatelessWidget {
 
             },
           ),
+
+          ListTile(
+            title: Text('测试Bloc状态管理'),
+            leading: CircleAvatar(
+              child: Icon(Icons.share),
+            ),
+            onTap: () {
+              RouterUtil.routeAnimation(context, TestWidget());
+            },
+          ),
         ],
       ),
     );;
