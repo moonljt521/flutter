@@ -1,12 +1,12 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_first_demo/bloc/BlocProvider.dart';
 import 'package:flutter_first_demo/http/Api.dart';
 import 'package:flutter_first_demo/http/HttpUtil.dart';
-import 'package:flutter_first_demo/news/item_news_page.dart';
+import 'package:flutter_first_demo/news/item_news_view.dart';
+import 'package:flutter_first_demo/news/news_list_provider.dart';
 
-class NewsListPage extends StatefulWidget {
+class NewsListPage extends StatelessWidget {
 
   String type;
 
@@ -16,58 +16,56 @@ class NewsListPage extends StatefulWidget {
   }):super(key:key);
 
   @override
-  State<StatefulWidget> createState() {
-    return NewsListState();
+  Widget build(BuildContext context) {
+    return BlocProvider<NewsProvider>(
+      child: NewsListState(type: type,),
+      bloc: NewsProvider(),
+    );;
   }
 }
 
+class NewsListState extends StatelessWidget{
 
-class NewsListState extends State<NewsListPage> with AutomaticKeepAliveClientMixin{
+  String type;
 
-  var listData ;
+  NewsListState({
+    Key key,
+    @required this.type
+  }):super(key:key);
 
-  @override
-  void initState() {
-    super.initState();
-    getNewsList();
-  }
+
+  NewsProvider bloc;
 
   @override
   Widget build(BuildContext context) {
-      if(listData is ErrorBody){
-        return Center(
 
-          child :
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(Icons.error),
-                Text((listData as ErrorBody).errorMsg , style: TextStyle(fontSize: 15.0, color: Colors.blueGrey),)
-              ],
-            )
-          ,
-        );
-      }else if(listData is List){
-        return ListView.builder(
-          itemCount: (listData as List).length,
-          itemBuilder: (context, i) => buildItem(i),
-        );
-      }else {
-        return Text("");
-      }
+    print("build................>>>>>>");
+    bloc = BlocProvider.of<NewsProvider>(context);
 
+    getNewsList();
+
+    return
+      StreamBuilder<List>(  // 监听Stream，每次值改变的时候，更新Text中的内容
+        stream: bloc.resultData,
+        initialData: List(),
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot){
+          return
+            ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, i) => buildPage(snapshot.data,i),
+            );
+        }
+    );
   }
 
-  Widget buildItem(int i) {
+  Widget buildPage(var data , var i){
     if(i.isOdd){
       return Divider(height: 1.0);
     }else {
       i = i ~/ 2;
-      var newsData = listData[i];
-      return ItemNewsWidget(itemData: newsData);
+      return ItemNewsWidget(itemData: data[i]);
     }
   }
-
 
   /**
    *  json示例
@@ -97,15 +95,15 @@ class NewsListState extends State<NewsListPage> with AutomaticKeepAliveClientMix
   getNewsList(){
 
     String url = Api.BaseUrl_news ;
-    url += "?type=" + widget.type + "&key=" + HttpUtil.NEWS_KEY;
+    url += "?type=" + type + "&key=" + HttpUtil.NEWS_KEY;
 
     HttpUtil.get(url, HttpUtil.SOURCE_JUHE ,(data){
        if(data != null){
-         setState(() {
-           listData = data;
-         });
+
+         bloc.incrementCounter.add(data);
+
        }
-    }  );
+    });
   }
 
   @override

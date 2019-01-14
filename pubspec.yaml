@@ -30,7 +30,7 @@ dependencies:
   flutter_screenutil: ^0.3.0
 #  ！！！
   dio: ^1.0.4
-
+  package_info: ^0.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,15 +1,15 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
+import 'package:flutter_first_demo/bloc/test_bloc_page.dart';
+import 'package:flutter_first_demo/bloc/test_stream_page.dart';
+import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/countdown/CountDownPage.dart';
 import 'package:flutter_first_demo/datepicker/datepicker.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/test_page.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
-import 'package:flutter/scheduler.dart';
 //import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -112,14 +112,25 @@ class MyDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            title: Text('测试Bloc状态管理'),
+            title: Text('测试StreamBuilder更新UI'),
             leading: CircleAvatar(
               child: Icon(Icons.share),
             ),
             onTap: () {
-              RouterUtil.routeAnimation(context, TestWidget());
+              RouterUtil.routeAnimation(context, CounterPage());
             },
           ),
+
+          ListTile(
+            title: Text('测试Bloc更新UI'),
+            leading: CircleAvatar(
+              child: Icon(Icons.share),
+            ),
+            onTap: () {
+              RouterUtil.routeAnimation(context, BlocCounterPage());
+            },
+          ),
+
         ],
       ),
     );;

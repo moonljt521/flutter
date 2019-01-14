@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/home/articel_detail_page.dart';
+import 'package:flutter_first_demo/http/HttpUtil.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
 
@@ -25,10 +26,10 @@ class ItemNewsWidget extends StatefulWidget {
 class ItemNewsState extends State<ItemNewsWidget> {
   @override
   Widget build(BuildContext context) {
-    return
-        Card(
-          elevation: 4,
-          child: InkWell(
+
+    return Card(
+        elevation: 4,
+        child: InkWell(
             onTap: (){
               RouterUtil.routeAnimation(context, ArticleDetaiPage(
                 title: widget.itemData['title'],
@@ -59,16 +60,10 @@ class ItemNewsState extends State<ItemNewsWidget> {
                   alignment: Alignment.centerLeft,
                   child:Text("["+ widget.itemData['author_name'] + "]" + widget.itemData['date']),
                 ),
-
               ],
 
             )
-          )
-        );
-
-
+        )
+    );
   }
-
-
-
 }
