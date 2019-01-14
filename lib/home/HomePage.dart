@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/home/ArticleItem.dart';
 import 'package:flutter_first_demo/constant/Constants.dart';
+import 'package:flutter_first_demo/home/wandroid_body.dart';
 import 'package:flutter_first_demo/http/Api.dart';
 import 'package:flutter_first_demo/request/request_manager.dart';
 import 'package:flutter_first_demo/request/request_util.dart';
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
   SlideView _bannerView;
 
   void getBanner() {
-    RequestManager.getInstance().getWanAndroidBanner( (data){
+    RequestManager.getWanAndroidBanner( (data){
       if (data != null) {
         setState(() {
           bannerData = data;
@@ -118,7 +119,7 @@ class _HomePageState extends State<HomePage> {
       isLoading = true;
     });
 
-    RequestManager.getInstance().getWanAndroidMainPage( "$curPage" ,(data){
+    RequestManager.getWanAndroidMainPage( "$curPage" ,(data){
       if (data != null) {
 
         Map<String, dynamic> map = data;
@@ -159,6 +160,8 @@ class _HomePageState extends State<HomePage> {
     i -= 1;
 
     var itemData = listData[i];
+
+//    new WandroidBean
 
     if (itemData is String && itemData == Constants.END_LINE_TAG) {
       return EndLine();
