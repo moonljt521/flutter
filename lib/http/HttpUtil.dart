@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:flutter_first_demo/http/Api.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +21,12 @@ import 'dart:convert';
 
 //这里只封装了常见的get和post请求类型,不带Cookie
 class HttpUtil {
+
+  static HttpUtil instance;
+
+  Dio _dio;
+  Options options;
+
   static const String GET = "get";
   static const String POST = "post";
 
@@ -27,6 +34,8 @@ class HttpUtil {
 
   static const num SOURCE_HONGYUANG = 1;
   static const num SOURCE_JUHE = 2;
+
+
 
   static void get(String url, num source ,Function callback,
       {Map<String, String> params,

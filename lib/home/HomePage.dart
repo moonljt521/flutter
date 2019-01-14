@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/home/ArticleItem.dart';
 import 'package:flutter_first_demo/constant/Constants.dart';
 import 'package:flutter_first_demo/http/Api.dart';
-import 'package:flutter_first_demo/http/HttpUtil.dart';
+import 'package:flutter_first_demo/request/request_manager.dart';
+import 'package:flutter_first_demo/request/request_util.dart';
+import 'package:flutter_first_demo/utils/Toast.dart';
 import 'package:flutter_first_demo/widget/EndLine.dart';
 import 'package:flutter_first_demo/widget/SlideView.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -99,15 +100,15 @@ class _HomePageState extends State<HomePage> {
   SlideView _bannerView;
 
   void getBanner() {
-    String bannerUrl = Api.BANNER;
-
-    HttpUtil.get(bannerUrl, HttpUtil.SOURCE_HONGYUANG, (data) {
+    RequestManager.getInstance().getWanAndroidBanner( (data){
       if (data != null) {
         setState(() {
           bannerData = data;
           _bannerView = SlideView(bannerData);
         });
       }
+    } , errorCallBack: (error){
+       Toast.toast(error);
     });
   }
 
@@ -117,10 +118,7 @@ class _HomePageState extends State<HomePage> {
       isLoading = true;
     });
 
-    String url = Api.ARTICLE_LIST;
-    url += "$curPage/json";
-
-    HttpUtil.get(url, HttpUtil.SOURCE_HONGYUANG, (data) {
+    RequestManager.getInstance().getWanAndroidMainPage( "$curPage" ,(data){
       if (data != null) {
 
         Map<String, dynamic> map = data;
@@ -146,6 +144,8 @@ class _HomePageState extends State<HomePage> {
           listData = list1;
         });
       }
+    } , errorCallBack: (error){
+      Toast.toast(error);
     });
   }
 

@@ -31,6 +31,9 @@ dependencies:
 #  ！！！
   dio: ^1.0.4
   package_info: ^0.3.2
+#  rxDrat
+  rxdart: ^0.20.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
