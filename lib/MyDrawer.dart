@@ -11,6 +11,7 @@ import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/rx_dart/rx_drat.dart';
 import 'package:flutter_first_demo/test_page.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
+import 'package:flutter_first_demo/utils/Toast.dart';
 //import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -107,7 +108,10 @@ class MyDrawer extends StatelessWidget {
             ),
             onTap: () {
 
-              RouterUtil.routeAnimation(context, TestWidget());
+
+//              RouterUtil.routeAnimation(context, TestWidget());
+
+              goTo(context);
 
             },
           ),
@@ -147,9 +151,15 @@ class MyDrawer extends StatelessWidget {
     );;
   }
 
-  goTo(BuildContext context){
-    print("111112");
-    RouterUtil.routeAnimation(context, Calculator());
+  goTo(BuildContext context) async{
+//    RouterUtil.routeAnimation(context, TestWidget());
+
+    String result = await Navigator.push(context, new MaterialPageRoute(builder: (context){
+        return new TestWidget();
+    }));
+
+    Toast.toast(result);
+
   }
 
 }
