@@ -29,6 +29,9 @@ class HttpUtil {
     return _instance;
   }
 
+  /**
+   * y异步模式
+   */
   get(url, Function callBack , {params, options, cancelToken , Function errorCallBack}) async {
     print('get请求启动! url： ${_dio.options.baseUrl}$url  , reqParams:$params' );
 
@@ -73,7 +76,68 @@ class HttpUtil {
     }
   }
 
+  /**
+   * 同步模式
+   */
+  Future<BaseResp<T>> getSync<T>(url, {params, options, cancelToken}) async {
+    print('get请求启动! url： ${_dio.options.baseUrl}$url  , reqParams:$params' );
 
+    int _code;
+    String _msg;
+    T _data;
+    Response response;
+
+    if (params != null && params.isNotEmpty) {
+      StringBuffer sb = StringBuffer("?");
+      params.forEach((key, value) {
+        sb.write("$key" + "=" + "$value" + "&");
+      });
+      String paramStr = sb.toString();
+      paramStr = paramStr.substring(0, paramStr.length - 1);
+      url += paramStr;
+    }
+
+    try {
+      response = await _dio.get(
+        url,
+        cancelToken: cancelToken,
+      );
+
+      if(response.statusCode == 200){
+        print('get请求成功!response.data：${response.data}');
+
+        _code = response.data['errorCode'];
+        _msg = response.data['errorMsg'];
+        _data = response.data['data'];
+      return new BaseResp(_code, _msg, _data);
+
+      }else {
+        String errorMsg = "网络请求错误,状态码:" + response.statusCode.toString();
+
+        return new Future.error(new DioError(
+          response: response,
+          message: errorMsg,
+          type: DioErrorType.RESPONSE
+        ));
+      }
+
+    } on DioError catch (e) {
+      if (CancelToken.isCancel(e)) {
+        print('get请求取消! ' + e.message);
+      }
+      print('get请求发生错误：$e');
+
+      return new Future.error(new DioError(
+          response: response,
+          message: e.message,
+          type: DioErrorType.RESPONSE
+      ));
+    }
+  }
+
+  /**
+   * 异步模式
+   */
   post(url,  Function callBack ,{params, options, cancelToken }) async {
     print('post请求启动! url： ${_dio.options.baseUrl}, $url  , reqParams:$params' );
 
@@ -121,11 +185,78 @@ class HttpUtil {
     }
   }
 
-  static void _handError(Function errorCallback,String errorMsg){
-    if (errorCallback != null) {
-      errorCallback(errorMsg);
+  Future<BaseResp<T>> postSync<T>(url ,{params, options, cancelToken }) async {
+    print('post请求启动! url： ${_dio.options.baseUrl}, $url  , reqParams:$params' );
+
+    Response response;
+    int _code;
+    String _msg;
+    T _data;
+
+    if (params != null && params.isNotEmpty) {
+      StringBuffer sb = StringBuffer("?");
+      params.forEach((key, value) {
+        sb.write("$key" + "=" + "$value" + "&");
+      });
+      String paramStr = sb.toString();
+      paramStr = paramStr.substring(0, paramStr.length - 1);
+      url += paramStr;
+    }
+
+    try {
+      response = await _dio.post(
+        options.baseUrl +  url,
+        data: params,
+        cancelToken: cancelToken,
+      );
+
+      if(response.statusCode == 200){
+
+        _code = response.data['errorCode'];
+        _msg = response.data['errorMsg'];
+        _data = response.data['data'];
+        return new BaseResp(_code, _msg, _data);
+
+      }else {
+        String errorMsg = "网络请求错误,状态码:" + response.statusCode.toString();
+
+        return new Future.error(new DioError(
+            response: response,
+            message: errorMsg,
+            type: DioErrorType.RESPONSE
+        ));
+      }
+
+    } on DioError catch (e) {
+      if (CancelToken.isCancel(e)) {
+        print('post请求取消! ' + e.message);
+      }
+      print('post请求发生错误：$e');
+
+      return new Future.error(new DioError(
+          response: response,
+          message: 'post请求取消! ' + e.message,
+          type: DioErrorType.RESPONSE
+      ));
     }
   }
+}
 
 
+class BaseResp<T> {
+  int errorCode;
+  String errorMsg;
+  T data;
+
+  BaseResp( this.errorCode, this.errorMsg, this.data);
+
+  @override
+  String toString() {
+    StringBuffer sb = new StringBuffer('{');
+    sb.write(",\"code\":$errorCode");
+    sb.write(",\"msg\":\"$errorMsg\"");
+    sb.write(",\"data\":\"$data\"");
+    sb.write('}');
+    return sb.toString();
+  }
 }
