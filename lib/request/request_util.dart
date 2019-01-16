@@ -7,33 +7,30 @@ import 'package:flutter_first_demo/http/HttpUtil.dart';
 
 class HttpUtil {
 
-  static HttpUtil instance;
-  Dio dio;
-  Options options;
+  Dio _dio;
 
-  static HttpUtil getInstance() {
-    print('getInstance');
-    if (instance == null) {
-      instance = new HttpUtil();
-    }
-    return instance;
+  factory HttpUtil() => _getInstance();
+  static HttpUtil get instance => _getInstance();
+  static HttpUtil _instance;
+
+  HttpUtil._internal(){
+    _dio = new Dio();
+    _dio.options
+      ..baseUrl = Api.BaseUrl
+      ..connectTimeout = 10000
+      ..receiveTimeout = 3000;
   }
 
-  HttpUtil({baseUrl}) {
-    String _baseUrl = Api.BaseUrl;
-    if(baseUrl != null){
-      _baseUrl = baseUrl;
+  static HttpUtil _getInstance() {
+    print('getInstance');
+    if (_instance == null) {
+      _instance = new HttpUtil._internal();
     }
-
-    dio = new Dio();
-    dio.options
-        ..baseUrl =  _baseUrl
-        ..connectTimeout = 10000
-        ..receiveTimeout = 3000;
+    return _instance;
   }
 
   get(url, Function callBack , {params, options, cancelToken , Function errorCallBack}) async {
-    print('get请求启动! url： $dio.options.baseUrl  , $url  , reqParams:$params' );
+    print('get请求启动! url： ${_dio.options.baseUrl}$url  , reqParams:$params' );
 
     Response response;
 
@@ -48,7 +45,7 @@ class HttpUtil {
     }
 
     try {
-      response = await dio.get(
+      response = await _dio.get(
         url,
         cancelToken: cancelToken,
       );
@@ -78,7 +75,7 @@ class HttpUtil {
 
 
   post(url,  Function callBack ,{params, options, cancelToken }) async {
-    print('post请求启动! url： $dio.options.baseUrl  , $url  , reqParams:$params' );
+    print('post请求启动! url： ${_dio.options.baseUrl}, $url  , reqParams:$params' );
 
     Response response;
     ErrorBody errorBody;
@@ -94,7 +91,7 @@ class HttpUtil {
     }
 
     try {
-      response = await dio.post(
+      response = await _dio.post(
         options.baseUrl +  url,
         data: params,
         cancelToken: cancelToken,
