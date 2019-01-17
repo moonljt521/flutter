@@ -80,6 +80,7 @@ class HttpUtil {
    * 同步模式
    */
   Future<BaseResp<T>> getSync<T>(url, {params, options, cancelToken}) async {
+
     print('get请求启动! url： ${_dio.options.baseUrl}$url  , reqParams:$params' );
 
     int _code;
@@ -106,10 +107,15 @@ class HttpUtil {
       if(response.statusCode == 200){
         print('get请求成功!response.data：${response.data}');
 
-        _code = response.data['errorCode'];
-        _msg = response.data['errorMsg'];
+        _code = 200;
+        _msg = "";
+
+
+        if(response.data is! Map){
+           return new BaseResp(_code, _msg, response.data);
+        }
         _data = response.data['data'];
-      return new BaseResp(_code, _msg, _data);
+        return new BaseResp(_code, _msg, _data);
 
       }else {
         String errorMsg = "网络请求错误,状态码:" + response.statusCode.toString();
@@ -212,8 +218,6 @@ class HttpUtil {
 
       if(response.statusCode == 200){
 
-        _code = response.data['errorCode'];
-        _msg = response.data['errorMsg'];
         _data = response.data['data'];
         return new BaseResp(_code, _msg, _data);
 

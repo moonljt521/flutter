@@ -100,54 +100,97 @@ class _HomePageState extends State<HomePage> {
 
   SlideView _bannerView;
 
-  void getBanner() {
-    RequestManager.getWanAndroidBanner( (data){
-      if (data != null) {
-        setState(() {
-          bannerData = data;
-          _bannerView = SlideView(bannerData);
-        });
-      }
-    } , errorCallBack: (error){
-       Toast.toast(error);
-    });
+  void getBanner() async{
+
+    BaseResp<List> resp = await RequestManager.getWanAndroidBannerSync();
+
+    if (resp != null) {
+      setState(() {
+        bannerData = resp.data;
+        _bannerView = SlideView(bannerData);
+      });
+    }
+
+
+//    await RequestManager.getWanAndroidBanner( (data){
+//      if (data != null) {
+//        setState(() {
+//          bannerData = data;
+//          _bannerView = SlideView(bannerData);
+//        });
+//      }
+//    } , errorCallBack: (error){
+//       Toast.toast(error);
+//    });
   }
 
-  void getHomeArticlelist() {
+  void getHomeArticlelist() async{
 
     setState(() {
       isLoading = true;
     });
 
-    RequestManager.getWanAndroidMainPage( "$curPage" ,(data){
-      if (data != null) {
+    BaseResp<Map<String, dynamic>> resp = await RequestManager.getWanAndroidMainPageSync<Map<String,dynamic>>("$curPage");
+    if (resp != null) {
 
-        Map<String, dynamic> map = data;
+      List _listData = resp.data['datas'] ;
 
-        var _listData = map['datas'];
+      listTotalSize = resp.data['datas'].length;
 
-        listTotalSize = map["total"];
+      setState(() {
+        isLoading = false;
 
-        setState(() {
-          isLoading = false;
+        var list1 = List();
+        if (curPage == 0) {
+          listData.clear();
+        }
+        curPage++;
 
-          var list1 = List();
-          if (curPage == 0) {
-            listData.clear();
-          }
-          curPage++;
+        list1.addAll(listData);
+        list1.addAll(_listData);
+        if (list1.length >= listTotalSize) {
+          list1.add(Constants.END_LINE_TAG);
+        }
+        listData = list1;
+      });
+    }else{
+      Toast.toast(resp.errorMsg);
+    }
 
-          list1.addAll(listData);
-          list1.addAll(_listData);
-          if (list1.length >= listTotalSize) {
-            list1.add(Constants.END_LINE_TAG);
-          }
-          listData = list1;
-        });
-      }
-    } , errorCallBack: (error){
-      Toast.toast(error);
-    });
+//
+//    RequestManager.getWanAndroidMainPage( "$curPage" ,(data){
+//      if (data != null) {
+//
+//        Map<String, dynamic> map = data;
+//
+//        var _listData = map['datas'];
+//
+//        listTotalSize = map["total"];
+//
+//        setState(() {
+//          isLoading = false;
+//
+//          var list1 = List();
+//          if (curPage == 0) {
+//            listData.clear();
+//          }
+//          curPage++;
+//
+//          list1.addAll(listData);
+//          list1.addAll(_listData);
+//          if (list1.length >= listTotalSize) {
+//            list1.add(Constants.END_LINE_TAG);
+//          }
+//          listData = list1;
+//        });
+//      }
+//    } , errorCallBack: (error){
+//      Toast.toast(error);
+//    });
+
+
+
+
   }
 
   Widget buildItem(int i) {
