@@ -26,16 +26,17 @@ class _HomePageState extends State<HomePage> {
   var listTotalSize = 0;
 
   var isLoading = false;
+  var pullIsLoading = false;
 
-  ScrollController _contraller = ScrollController();
+  ScrollController _controller = ScrollController();
   TextStyle titleTextStyle = TextStyle(fontSize: 15.0);
   TextStyle subtitleTextStyle =
   TextStyle(color: Colors.blue, fontSize: 12.0);
 
   _HomePageState() {
-    _contraller.addListener(() {
-      var maxScroll = _contraller.position.maxScrollExtent;
-      var pixels = _contraller.position.pixels;
+    _controller.addListener(() {
+      var maxScroll = _controller.position.maxScrollExtent;
+      var pixels = _controller.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
         getHomeArticlelist();
@@ -52,12 +53,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _contraller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
 
-  Future<Null> _pullToRefresh() {
+  Future<Null> _pullToRefresh() async{
     setState(() {
       isLoading = true;
     });
@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> {
       Widget listView = ListView.builder(
         itemCount: listData.length + 1,
         itemBuilder: (context, i) => buildItem(i),
-        controller: _contraller,
+        controller: _controller,
       );
 
       return Column(
@@ -87,7 +88,9 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
 
           Expanded(
-            child: RefreshIndicator(backgroundColor: Colors.blue,child: listView, onRefresh: _pullToRefresh),
+            child: RefreshIndicator(
+                child: listView,
+                onRefresh: _pullToRefresh),
             flex: 1,
           ),
 
