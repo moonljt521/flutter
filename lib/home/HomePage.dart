@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  Future<Null> _pullToRefresh() async {
+  Future<Null> _pullToRefresh() {
     setState(() {
       isLoading = true;
     });
@@ -133,9 +133,9 @@ class _HomePageState extends State<HomePage> {
     BaseResp<Map<String, dynamic>> resp = await RequestManager.getWanAndroidMainPageSync<Map<String,dynamic>>("$curPage");
     if (resp != null) {
 
-      List _listData = resp.data['datas'] ;
+      var _listData = resp.data['datas'] ;
 
-      listTotalSize = resp.data['datas'].length;
+      listTotalSize = resp.data['total'];
 
       setState(() {
         isLoading = false;
@@ -151,13 +151,14 @@ class _HomePageState extends State<HomePage> {
         if (list1.length >= listTotalSize) {
           list1.add(Constants.END_LINE_TAG);
         }
+
         listData = list1;
       });
     }else{
       Toast.toast(resp.errorMsg);
     }
 
-//
+
 //    RequestManager.getWanAndroidMainPage( "$curPage" ,(data){
 //      if (data != null) {
 //
