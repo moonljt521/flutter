@@ -8,7 +8,7 @@ import 'package:flutter_first_demo/news/news_list_provider.dart';
 
 class NewsListPage extends StatelessWidget {
 
-  String type;
+  final String type;
 
   NewsListPage({
     Key key,
@@ -26,7 +26,10 @@ class NewsListPage extends StatelessWidget {
 
 class NewsListState extends StatelessWidget{
 
-  String type;
+  final String type;
+
+  NewsProvider bloc;
+
 
   NewsListState({
     Key key,
@@ -34,12 +37,10 @@ class NewsListState extends StatelessWidget{
   }):super(key:key);
 
 
-  NewsProvider bloc;
 
   @override
   Widget build(BuildContext context) {
 
-    print("build................>>>>>>");
     bloc = BlocProvider.of<NewsProvider>(context);
 
     getNewsList();
