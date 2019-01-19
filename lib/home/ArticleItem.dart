@@ -7,7 +7,7 @@ import 'package:flutter_first_demo/utils/DataUtils.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/StringUtils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:gradient_text/gradient_text.dart';
 
 ///个人感觉条目比较复杂的话可以单独拿出来,而且可以复用.可以对比CollectListPage.dart中的item哪个更合理
 class ArticleItem extends StatefulWidget {
@@ -101,14 +101,24 @@ class ArticleItemState extends State<ArticleItem> {
     Row title = Row(
       children: <Widget>[
         Expanded(
-          child: Text.rich(
-            widget.isSearch
-                ? StringUtils.getTextSpan(widget.itemData['title'], widget.id)
-                : TextSpan(text: widget.itemData['title']),
-            softWrap: true,
-            style: TextStyle(fontSize: ScreenUtil().setSp(28,false), color: Colors.black),
-            textAlign: TextAlign.left,
-          ),
+          child:
+//          Text.rich(
+//            widget.isSearch
+//                ? StringUtils.getTextSpan(widget.itemData['title'], widget.id)
+//                : TextSpan(text: widget.itemData['title']),
+//            softWrap: true,
+//            style: TextStyle(fontSize: ScreenUtil().setSp(28,false), color: Colors.black),
+//            textAlign: TextAlign.left,
+//          ),
+            GradientText(
+                widget.itemData['title'],
+               style: TextStyle(fontSize: ScreenUtil().setSp(28,false),),
+               gradient: LinearGradient(
+                  colors: [Colors.deepPurple, Colors.deepOrange, Colors.pink , Colors.black12 ,Colors.lightGreenAccent]),
+                textAlign: TextAlign.left,
+            ),
+
+
         )
       ],
     );
