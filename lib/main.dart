@@ -7,7 +7,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) => {});
 
 
     return MaterialApp(
@@ -17,9 +18,6 @@ class HomePage extends StatelessWidget {
         primaryColor: Colors.blueAccent,
       ),
       home: MainPage(),
-
-      // 去掉 标题栏"debug" 标志
-//      debugShowCheckedModeBanner: false,
     );
   }
 }

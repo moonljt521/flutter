@@ -35,7 +35,6 @@ class _FoundPageState extends State<NewsPage> with AutomaticKeepAliveClientMixin
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
