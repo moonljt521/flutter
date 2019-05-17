@@ -10,9 +10,9 @@ import 'package:flutter_first_demo/datepicker/datepicker.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/rx_dart/rx_drat.dart';
 import 'package:flutter_first_demo/test_page.dart';
+import 'package:flutter_first_demo/touch/test_touch.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
-//import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -83,7 +83,6 @@ class MyDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).pop();
-
               RouterUtil.routeAnimation(context, DatePickerPage());
 
             },
@@ -101,21 +100,6 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           
-          ListTile(
-            title: Text('test 页面基类'),
-            leading: CircleAvatar(
-              child: Icon(Icons.share),
-            ),
-            onTap: () {
-
-
-//              RouterUtil.routeAnimation(context, TestWidget());
-
-              goTo(context);
-
-            },
-          ),
-
           ListTile(
             title: Text('测试StreamBuilder更新UI'),
             leading: CircleAvatar(
@@ -146,20 +130,21 @@ class MyDrawer extends StatelessWidget {
             },
           ),
 
+
+          ListTile(
+            title: Text('测试onTouch'),
+            leading: CircleAvatar(
+              child: Icon(Icons.details),
+            ),
+            onTap: () {
+              RouterUtil.routeAnimation(context, MyTouch());
+            },
+          ),
+
+
         ],
       ),
     );;
-  }
-
-  goTo(BuildContext context) async{
-//    RouterUtil.routeAnimation(context, TestWidget());
-
-    String result = await Navigator.push(context, new MaterialPageRoute(builder: (context){
-        return new TestWidget();
-    }));
-
-    Toast.toast(result);
-
   }
 
 }
