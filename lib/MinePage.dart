@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/home/articel_detail_page.dart';
+
 
 class MinePage extends StatefulWidget {
 
