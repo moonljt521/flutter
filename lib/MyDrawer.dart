@@ -14,6 +14,8 @@ import 'package:flutter_first_demo/touch/test_touch.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
 
+import 'custom_widget/custom_widget_demo.dart';
+
 class MyDrawer extends StatelessWidget {
 
   @override
@@ -119,6 +121,17 @@ class MyDrawer extends StatelessWidget {
               RouterUtil.routeAnimation(context, BlocCounterPage());
             },
           ),
+
+          ListTile(
+            title: Text('自定义widget：旋转view'),
+            leading: CircleAvatar(
+              child: Icon(Icons.share),
+            ),
+            onTap: () {
+              RouterUtil.routeAnimation(context, TurnBoxRoute());
+            },
+          ),
+
 
           ListTile(
             title: Text('测试rxDart'),
