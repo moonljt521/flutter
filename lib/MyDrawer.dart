@@ -6,6 +6,8 @@ import 'package:flutter_first_demo/bloc/test_bloc_page.dart';
 import 'package:flutter_first_demo/bloc/test_stream_page.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/countdown/CountDownPage.dart';
+import 'package:flutter_first_demo/custom_widget/chessboard_page.dart';
+import 'package:flutter_first_demo/custom_widget/custom_widget_list_page.dart';
 import 'package:flutter_first_demo/datepicker/datepicker.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/rx_dart/rx_drat.dart';
@@ -14,7 +16,7 @@ import 'package:flutter_first_demo/touch/test_touch.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
 
-import 'custom_widget/custom_widget_demo.dart';
+import 'custom_widget/custom_roate.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -123,15 +125,14 @@ class MyDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            title: Text('自定义widget：旋转view'),
+            title: Text('自定义widget'),
             leading: CircleAvatar(
               child: Icon(Icons.share),
             ),
             onTap: () {
-              RouterUtil.routeAnimation(context, TurnBoxRoute());
+              RouterUtil.routeAnimation(context, CustomWidgetList());
             },
           ),
-
 
           ListTile(
             title: Text('测试rxDart'),
