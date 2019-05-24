@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/home/articel_detail_page.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
-import 'package:flutter_first_demo/utils/Toast.dart';
+import 'package:flutter_first_demo/webview_container/webview_page.dart';
 
 class SlideView extends StatefulWidget {
   var data;
@@ -79,10 +78,10 @@ class SlideViewState extends State<SlideView>
   }
 
   void _handOnItemClick(itemData) {
-    Toast.toast( "SlideView.dart_handOnItemClick");
-    RouterUtil.routeAnimation(context, ArticleDetaiPage(
-      title: itemData['title'],
-      url: itemData['link'],
+    RouterUtil.routeAnimation(context, WebViewPage(
+       itemData['title'],
+       itemData['link'],
     ));
+
   }
 }
