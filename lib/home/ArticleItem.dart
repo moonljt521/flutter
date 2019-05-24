@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/home/articel_detail_page.dart';
 import 'package:flutter_first_demo/http/Api.dart';
 import 'package:flutter_first_demo/http/HttpUtil.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/utils/DataUtils.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/utils/StringUtils.dart';
+import 'package:flutter_first_demo/webview_container/webview_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_text/gradient_text.dart';
 
@@ -55,9 +55,9 @@ class ArticleItemState extends State<ArticleItem> {
 
   void _itemClick(itemData) async {
 
-    RouterUtil.routeAnimation(context, ArticleDetaiPage(
-      title: itemData['title'],
-      url: itemData['link'],
+    RouterUtil.routeAnimation(context, WebViewPage(
+      itemData['title'],
+      itemData['link'],
     ));
   }
 

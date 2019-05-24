@@ -6,17 +6,11 @@ import 'package:flutter_first_demo/bloc/test_bloc_page.dart';
 import 'package:flutter_first_demo/bloc/test_stream_page.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/countdown/CountDownPage.dart';
-import 'package:flutter_first_demo/custom_widget/chessboard_page.dart';
 import 'package:flutter_first_demo/custom_widget/custom_widget_list_page.dart';
 import 'package:flutter_first_demo/datepicker/datepicker.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
-import 'package:flutter_first_demo/rx_dart/rx_drat.dart';
-import 'package:flutter_first_demo/test_page.dart';
 import 'package:flutter_first_demo/touch/test_touch.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
-import 'package:flutter_first_demo/utils/Toast.dart';
-
-import 'custom_widget/custom_roate.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -133,17 +127,6 @@ class MyDrawer extends StatelessWidget {
               RouterUtil.routeAnimation(context, CustomWidgetList());
             },
           ),
-
-          ListTile(
-            title: Text('测试rxDart'),
-            leading: CircleAvatar(
-              child: Icon(Icons.share),
-            ),
-            onTap: () {
-              RouterUtil.routeAnimation(context, RxDartDemoWidget());
-            },
-          ),
-
 
           ListTile(
             title: Text('测试onTouch'),
