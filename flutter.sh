@@ -53,11 +53,7 @@ else :
     cp bak/config/uploadArchives.gradle .android/config/uploadArchives.gradle
 fi
 
-if [  -f ".android/Flutter/gradle.properties" ];then
-    echo '.android/Flutter/gradle.properties 已存在'
-else :
-    cp bak/gradle.properties .android/Flutter/gradle.properties
-fi
+cp bak/gradle.properties .android/Flutter/gradle.properties
 
 # step3.2  同时在Flutter 的gradle中插入引用  apply from: "../uploadArchives.gradle"
 echo '在Flutter 的gradle中插入引用  apply from: "../uploadArchives.gradle"'
@@ -70,30 +66,52 @@ else
 fi
 
 # step4 build
-echo 'build apk'
-${rootFlutter} build apk
+echo '编译出四个中间产物 ... '
+flutter build aot --suppress-analytics --quiet --target lib/main.dart --target-platform android-arm --output-dir build/app/intermediates/flutter/release  --release
+if [ $? -eq 0 ]; then
+    echo '编译中间产物 succeed !!!'
+else
+    echo '编译中间产物出错 !!!'
+    exit 1
+fi
 
 # step4 unzip apk
-echo 'unzip apk'
-cd ${projectDir}/build/host
-mkdir apkfile
-unzip ${projectDir}/build/host/outputs/apk/release/app-release.apk -d ${projectDir}/build/host/apkfile/
+echo '复制中间产物到项目目录下 ... '
+mkdir ${projectDir}/.android/Flutter/src/main/assets
 
-# step4 copy assets / lib
-echo 'copy assets / lib'
-mv ${projectDir}/build/host/apkfile/assets/ ${projectDir}/.android/Flutter/src/main/
-mv ${projectDir}/build/host/apkfile/lib/ ${projectDir}/.android/Flutter/src/main/
+cp build/app/intermediates/flutter/release/isolate_snapshot_data ${projectDir}/.android/Flutter/src/main/assets/isolate_snapshot_data
+cp build/app/intermediates/flutter/release/isolate_snapshot_instr ${projectDir}/.android/Flutter/src/main/assets/isolate_snapshot_instr
+cp build/app/intermediates/flutter/release/vm_snapshot_data ${projectDir}/.android/Flutter/src/main/assets/vm_snapshot_data
+cp build/app/intermediates/flutter/release/vm_snapshot_instr ${projectDir}/.android/Flutter/src/main/assets/vm_snapshot_instr
+
+echo '编译出assets资源文件文件 ...'
+flutter build bundle --suppress-analytics --target lib/main.dart --target-platform android-arm --precompiled --asset-dir  build/app/intermediates/flutter/release/flutter_assets --release
+if [ $? -eq 0 ]; then
+    echo '编译出assets资源文件文件 succeed !!!'
+else
+    echo '编译出assets资源文件文件出错......'
+    exit 1
+fi
+
+echo '复制assets资源文件文件到项目目录 ...'
+mkdir ${projectDir}/.android/Flutter/src/main/assets/flutter_assets
+cp -r build/app/intermediates/flutter/release/flutter_assets/ ${projectDir}/.android/Flutter/src/main/assets/flutter_assets/
+if [ $? -eq 0 ]; then
+    echo '复制assets资源文件文件到项目目录 succeed ..'
+else
+    echo '复制assets资源文件文件到项目目录, 出错 !!!'
+    exit 1
+fi
 
 # step5 build aar
 echo 'build aar'
 cd ${projectDir}/.android
 gradle clean flutter:assembleRelease uploadArchives --info
 
-# step6 remove assets/lib
 echo 'remove assets/lib'
 cd ${projectDir}/.android/Flutter/src/main/
 rm -rf assets
 rm -rf lib
 
-echo '打包成功..........................'
+echo '打包成功 : yqx-flutter.aar.......................'
 exit
