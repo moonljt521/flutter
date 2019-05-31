@@ -16,24 +16,24 @@ ${rootFlutter} clean
 
 
 # step2 copy so
-echo 'copy so'
-cd ${rootDir}/cache/artifacts/engine
-for arch in android-arm android-arm-profile android-arm-release ; do
-    pushd $arch
-    cp flutter.jar flutter-armeabi-v7a.jar #备份
-    unzip flutter.jar lib/armeabi-v7a/libflutter.so
-    mv lib/armeabi-v7a lib/armeabi
-    zip -d flutter.jar lib/armeabi-v7a/libflutter.so
-    zip flutter.jar lib/armeabi/libflutter.so
-    popd
-done
+#echo 'copy so'
+#cd ${rootDir}/cache/artifacts/engine
+#for arch in android-arm android-arm-profile android-arm-release ; do
+#    pushd $arch
+#    cp flutter.jar flutter-armeabi-v7a.jar #备份
+#    unzip flutter.jar lib/armeabi-v7a/libflutter.so
+#    mv lib/armeabi-v7a lib/armeabi
+#    zip -d flutter.jar lib/armeabi-v7a/libflutter.so
+#    zip flutter.jar lib/armeabi/libflutter.so
+#    popd
+#done
 
-# step3 package get
+# step 3 package get
 echo 'packages get'
 cd ${projectDir} # 回到项目
 ${rootFlutter} packages get
 
-# step3.1  因为.android是自动编译的，所以内部的配置文件和脚本不可控，所以需要将bak内的脚本自动复制到 .android 内部
+# step3.1 脚本补充：因为.android是自动编译的，所以内部的配置文件和脚本不可控，所以需要将bak内的脚本自动复制到 .android 内部
 echo 'copy bak/config/uploadArchives.gradle to .android/config/... ,    copy bak/gradle.properties to Flutter/gradle.properties'
 if [  -d '.android/config/' ]; then
    echo '.android/config 文件夹已存在'
@@ -55,7 +55,7 @@ fi
 
 cp bak/gradle.properties .android/Flutter/gradle.properties
 
-# step3.2  同时在Flutter 的gradle中插入引用  apply from: "../uploadArchives.gradle"
+# step 3.2  脚本补充：同时在Flutter 的gradle中插入引用  apply from: "../uploadArchives.gradle"
 echo '在Flutter 的gradle中插入引用  apply from: "../uploadArchives.gradle"'
 if [ `grep -c 'uploadArchives.gradle' .android/Flutter/build.gradle` -eq '1' ]; then
     echo "Found!"
@@ -65,7 +65,58 @@ else
     apply from: "../config/uploadArchives.gradle"' .android/Flutter/build.gradle
 fi
 
-# step4 build
+# setp 3.3 脚本补充：引入fat-aar 相关脚本
+# 在 settings.gradle 中 插入 ， 注意 sed 命令换行 在mac下 是 \'$'\n
+cp bak/setting_gradle_plugin.gradle .android/config/setting_gradle_plugin.gradle
+
+if [ `grep -c 'setting_gradle_plugin.gradle' .android/settings.gradle` -eq '1' ]; then
+    echo ".android/settings.gradle 中 已存在 ！！！"
+else
+    echo ".android/settings.gradle 中 不存在，去编辑"
+    sed -i '' '$a\
+    apply from: "./config/setting_gradle_plugin.gradle"
+    ' .android/settings.gradle
+fi
+
+if [ $? -eq 0 ]; then
+    echo '.android/settings.gradle 中 脚本插入 fat-aar 成功 !!!'
+else
+    echo '.android/settings.gradle 中 脚本插入 fat-aar 出错 !!!'
+    exit 1
+fi
+
+if [ `grep -c 'com.kezong:fat-aar' .android/build.gradle` -eq '1' ]; then
+    echo "com.kezong:fat-aar:1.0.3 已存在 ！！！"
+else
+    echo "com.kezong:fat-aar:1.0.3 不存在，去添加"
+    sed -i '' '10 a\
+    classpath "com.kezong:fat-aar:1.0.3"
+    ' .android/build.gradle
+fi
+
+
+# flutter/build.gradle 中添加fat-aar 依赖 和 dependencies_gradle_plugin
+if [ `grep -c "com.kezong.fat-aar" .android/Flutter/build.gradle` -eq '1' ]; then
+    echo "Flutter/build.gradle 中 com.kezong:fat-aar 已存在 ！！！"
+else
+    echo "Flutter/build.gradle 中 com.kezong:fat-aar 不存在，去添加"
+    sed -i '' '$a\
+    apply plugin: "com.kezong.fat-aar"
+    ' .android/Flutter/build.gradle
+fi
+
+cp bak/dependencies_gradle_plugin.gradle .android/config/dependencies_gradle_plugin.gradle
+if [ `grep -c 'dependencies_gradle_plugin' .android/Flutter/build.gradle` -eq '1' ]; then
+    echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 已存在 ！！！"
+else
+    echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 不存在，去添加"
+    sed -i '' '$a\
+    apply from: "../config/dependencies_gradle_plugin.gradle"
+    ' .android/Flutter/build.gradle
+fi
+
+
+# step 4.1  build products
 echo '编译出四个中间产物 ... '
 flutter build aot --suppress-analytics --quiet --target lib/main.dart --target-platform android-arm --output-dir build/app/intermediates/flutter/release  --release
 if [ $? -eq 0 ]; then
@@ -75,7 +126,7 @@ else
     exit 1
 fi
 
-# step4 unzip apk
+# step 4.2 copy products
 echo '复制中间产物到项目目录下 ... '
 mkdir ${projectDir}/.android/Flutter/src/main/assets
 
@@ -84,6 +135,7 @@ cp build/app/intermediates/flutter/release/isolate_snapshot_instr ${projectDir}/
 cp build/app/intermediates/flutter/release/vm_snapshot_data ${projectDir}/.android/Flutter/src/main/assets/vm_snapshot_data
 cp build/app/intermediates/flutter/release/vm_snapshot_instr ${projectDir}/.android/Flutter/src/main/assets/vm_snapshot_instr
 
+# step 5.1 build assets
 echo '编译出assets资源文件文件 ...'
 flutter build bundle --suppress-analytics --target lib/main.dart --target-platform android-arm --precompiled --asset-dir  build/app/intermediates/flutter/release/flutter_assets --release
 if [ $? -eq 0 ]; then
@@ -93,6 +145,7 @@ else
     exit 1
 fi
 
+# step 5.2 copy assets
 echo '复制assets资源文件文件到项目目录 ...'
 mkdir ${projectDir}/.android/Flutter/src/main/assets/flutter_assets
 cp -r build/app/intermediates/flutter/release/flutter_assets/ ${projectDir}/.android/Flutter/src/main/assets/flutter_assets/
@@ -103,15 +156,33 @@ else
     exit 1
 fi
 
-# step5 build aar
+# step 6 build aar
 echo 'build aar'
 cd ${projectDir}/.android
 gradle clean flutter:assembleRelease uploadArchives --info
 
+if [ $? -eq 0 ]; then
+    echo ''
+else
+    echo 'uploadArchives 出错 !!!'
+    exit 1
+fi
+
+# step 7 remove unused files
 echo 'remove assets/lib'
 cd ${projectDir}/.android/Flutter/src/main/
 rm -rf assets
 rm -rf lib
+
+# 删除 fat-aar 引用
+sed -i '' '$d
+    ' .android/settings.gradle
+sed -i '' '$d
+    ' .android/Flutter/build.gradle
+sed -i '' '$d
+    ' .android/Flutter/build.gradle
+sed -i '' '11 d
+    ' .android/build.gradle
 
 echo '打包成功 : yqx-flutter.aar.......................'
 exit
