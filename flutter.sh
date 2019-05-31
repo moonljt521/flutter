@@ -9,6 +9,85 @@ rootFlutter=`which flutter`
 rootDir=${rootFlutter%/*}
 # 获取
 
+# 假如没有引用三方的flutter Plugin 设置false 即可
+isPlugin=false
+
+# 删除 fat-aar 引用
+function delFatAarConfig() {
+
+if [  ${isPlugin} == false  ]; then
+    echo '删除 fat-aar 引用........未配置三方插件'
+else :
+    cd ${projectDir} # 回到项目
+    echo '删除 fat-aar 引用 ... '
+    sed -i '' '$d
+        ' .android/settings.gradle
+    sed -i '' '$d
+        ' .android/Flutter/build.gradle
+    sed -i '' '$d
+        ' .android/Flutter/build.gradle
+    sed -i '' '11 d
+        ' .android/build.gradle
+fi
+}
+
+# 引入fat-aar
+function addFatAArConfig() {
+ if [  ${isPlugin} == false  ]; then
+    echo '引入fat-aar........未配置三方插件'
+ else :
+    cd ${projectDir} # 回到项目
+
+    cp bak/setting_gradle_plugin.gradle .android/config/setting_gradle_plugin.gradle
+
+    if [ `grep -c 'setting_gradle_plugin.gradle' .android/settings.gradle` -eq '1' ]; then
+        echo ".android/settings.gradle 中 已存在 ！！！"
+    else
+        echo ".android/settings.gradle 中 不存在，去编辑"
+        sed -i '' '$a\
+        apply from: "./config/setting_gradle_plugin.gradle"
+        ' .android/settings.gradle
+    fi
+
+    if [ $? -eq 0 ]; then
+        echo '.android/settings.gradle 中 脚本插入 fat-aar 成功 !!!'
+    else
+        echo '.android/settings.gradle 中 脚本插入 fat-aar 出错 !!!'
+        exit 1
+    fi
+
+    if [ `grep -c 'com.kezong:fat-aar' .android/build.gradle` -eq '1' ]; then
+        echo "com.kezong:fat-aar:1.0.3 已存在 ！！！"
+    else
+        echo "com.kezong:fat-aar:1.0.3 不存在，去添加"
+        sed -i '' '10 a\
+        classpath "com.kezong:fat-aar:1.0.3"
+        ' .android/build.gradle
+    fi
+
+    # flutter/build.gradle 中添加fat-aar 依赖 和 dependencies_gradle_plugin
+    if [ `grep -c "com.kezong.fat-aar" .android/Flutter/build.gradle` -eq '1' ]; then
+        echo "Flutter/build.gradle 中 com.kezong:fat-aar 已存在 ！！！"
+    else
+        echo "Flutter/build.gradle 中 com.kezong:fat-aar 不存在，去添加"
+        sed -i '' '$a\
+        apply plugin: "com.kezong.fat-aar"
+        ' .android/Flutter/build.gradle
+    fi
+
+    cp bak/dependencies_gradle_plugin.gradle .android/config/dependencies_gradle_plugin.gradle
+    if [ `grep -c 'dependencies_gradle_plugin' .android/Flutter/build.gradle` -eq '1' ]; then
+        echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 已存在 ！！！"
+    else
+        echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 不存在，去添加"
+        sed -i '' '$a\
+        apply from: "../config/dependencies_gradle_plugin.gradle"
+        ' .android/Flutter/build.gradle
+    fi
+  fi
+}
+
+
 # step1 clean
 echo 'clean old build'
 find . -depth -name "build" | xargs rm -rf
@@ -67,54 +146,8 @@ fi
 
 # setp 3.3 脚本补充：引入fat-aar 相关脚本
 # 在 settings.gradle 中 插入 ， 注意 sed 命令换行 在mac下 是 \'$'\n
-cp bak/setting_gradle_plugin.gradle .android/config/setting_gradle_plugin.gradle
 
-if [ `grep -c 'setting_gradle_plugin.gradle' .android/settings.gradle` -eq '1' ]; then
-    echo ".android/settings.gradle 中 已存在 ！！！"
-else
-    echo ".android/settings.gradle 中 不存在，去编辑"
-    sed -i '' '$a\
-    apply from: "./config/setting_gradle_plugin.gradle"
-    ' .android/settings.gradle
-fi
-
-if [ $? -eq 0 ]; then
-    echo '.android/settings.gradle 中 脚本插入 fat-aar 成功 !!!'
-else
-    echo '.android/settings.gradle 中 脚本插入 fat-aar 出错 !!!'
-    exit 1
-fi
-
-if [ `grep -c 'com.kezong:fat-aar' .android/build.gradle` -eq '1' ]; then
-    echo "com.kezong:fat-aar:1.0.3 已存在 ！！！"
-else
-    echo "com.kezong:fat-aar:1.0.3 不存在，去添加"
-    sed -i '' '10 a\
-    classpath "com.kezong:fat-aar:1.0.3"
-    ' .android/build.gradle
-fi
-
-
-# flutter/build.gradle 中添加fat-aar 依赖 和 dependencies_gradle_plugin
-if [ `grep -c "com.kezong.fat-aar" .android/Flutter/build.gradle` -eq '1' ]; then
-    echo "Flutter/build.gradle 中 com.kezong:fat-aar 已存在 ！！！"
-else
-    echo "Flutter/build.gradle 中 com.kezong:fat-aar 不存在，去添加"
-    sed -i '' '$a\
-    apply plugin: "com.kezong.fat-aar"
-    ' .android/Flutter/build.gradle
-fi
-
-cp bak/dependencies_gradle_plugin.gradle .android/config/dependencies_gradle_plugin.gradle
-if [ `grep -c 'dependencies_gradle_plugin' .android/Flutter/build.gradle` -eq '1' ]; then
-    echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 已存在 ！！！"
-else
-    echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 不存在，去添加"
-    sed -i '' '$a\
-    apply from: "../config/dependencies_gradle_plugin.gradle"
-    ' .android/Flutter/build.gradle
-fi
-
+addFatAArConfig
 
 # step 4.1  build products
 echo '编译出四个中间产物 ... '
@@ -165,6 +198,7 @@ if [ $? -eq 0 ]; then
     echo ''
 else
     echo 'uploadArchives 出错 !!!'
+    delFatAarConfig
     exit 1
 fi
 
@@ -174,15 +208,7 @@ cd ${projectDir}/.android/Flutter/src/main/
 rm -rf assets
 rm -rf lib
 
-# 删除 fat-aar 引用
-sed -i '' '$d
-    ' .android/settings.gradle
-sed -i '' '$d
-    ' .android/Flutter/build.gradle
-sed -i '' '$d
-    ' .android/Flutter/build.gradle
-sed -i '' '11 d
-    ' .android/build.gradle
+delFatAarConfig
 
-echo '打包成功 : yqx-flutter.aar.......................'
+echo '打包成功 : yqx-flutter.aar...................！ '
 exit
