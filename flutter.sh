@@ -12,6 +12,15 @@ rootDir=${rootFlutter%/*}
 # 假如没有引用三方的flutter Plugin 设置false 即可
 isPlugin=false
 
+# targetSDK 设置为 26
+if [ `grep -c 'targetSdkVersion 26' .android/app/build.gradle` -eq '1' ]; then
+        echo "targetSDK 已经是26 ，不需要修改"
+else
+        echo "targetSDK 需要修改为 26 "
+        sed -i '' 's/targetSdkVersion 28/targetSdkVersion 26/g' .android/app/build.gradle
+fi
+
+
 # 删除 fat-aar 引用
 function delFatAarConfig() {
 
