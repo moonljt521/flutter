@@ -9,91 +9,110 @@ rootFlutter=`which flutter`
 rootDir=${rootFlutter%/*}
 # 获取
 
-# 假如没有引用三方的flutter Plugin 设置false 即可
+# 假如没有引用三方的flutter Plugin 设置false 即可 *************************
 isPlugin=false
 
 # targetSDK 设置为 26
 if [ `grep -c 'targetSdkVersion 26' .android/app/build.gradle` -eq '1' ]; then
-        echo "targetSDK 已经是26 ，不需要修改"
+     echo "targetSDK 已经是26 ，不需要修改"
 else
-        echo "targetSDK 需要修改为 26 "
-        sed -i '' 's/targetSdkVersion 28/targetSdkVersion 26/g' .android/app/build.gradle
+     echo "targetSDK 需要修改为 26 "
+     sed -i '' 's/targetSdkVersion 28/targetSdkVersion 26/g' .android/app/build.gradle
 fi
 
+# 版本号 + 1
+cd ${projectDir}
+v=`grep sonatypeVersion bak/gradle.properties|cut -d'=' -f2`
+echo 旧版本号$v
+v1=`echo | awk '{split("'$v'",array,"."); print array[1]}'`
+v2=`echo | awk '{split("'$v'",array,"."); print array[2]}'`
+v3=`echo | awk '{split("'$v'",array,"."); print array[3]}'`
+v4=`echo | awk '{split("'$v'",array,"."); print array[4]}'`
+y=`expr $v4 + 1`
+
+vv=$v1"."$v2"."$v3"."$y
+echo 新版本号$vv
+# 更新配置文件
+sed -i '' 's/sonatypeVersion='$v'/sonatypeVersion='$vv'/g' bak/gradle.properties
+if [ $? -eq 0 ]; then
+    echo ''
+else
+    echo '更新版本号失败...'
+    exit
+fi
 
 # 删除 fat-aar 引用
 function delFatAarConfig() {
-
-if [  ${isPlugin} == false  ]; then
-    echo '删除 fat-aar 引用........未配置三方插件'
-else :
-    cd ${projectDir} # 回到项目
-    echo '删除 fat-aar 引用 ... '
-    sed -i '' '$d
-        ' .android/settings.gradle
-    sed -i '' '$d
-        ' .android/Flutter/build.gradle
-    sed -i '' '$d
-        ' .android/Flutter/build.gradle
-    sed -i '' '11 d
-        ' .android/build.gradle
-fi
+    if [  ${isPlugin} == false  ]; then
+        echo '删除 fat-aar 引用........未配置三方插件'
+    else :
+        cd ${projectDir} # 回到项目
+        echo '删除 fat-aar 引用 ... '
+        sed -i '' '$d
+            ' .android/settings.gradle
+        sed -i '' '$d
+            ' .android/Flutter/build.gradle
+        sed -i '' '$d
+            ' .android/Flutter/build.gradle
+        sed -i '' '11 d
+            ' .android/build.gradle
+    fi
 }
 
 # 引入fat-aar
 function addFatAArConfig() {
- if [  ${isPlugin} == false  ]; then
-    echo '引入fat-aar........未配置三方插件'
- else :
-    cd ${projectDir} # 回到项目
+     if [  ${isPlugin} == false  ]; then
+        echo '引入fat-aar 配置........未配置三方插件'
+     else :
+        cd ${projectDir} # 回到项目
 
-    cp bak/setting_gradle_plugin.gradle .android/config/setting_gradle_plugin.gradle
+        cp bak/setting_gradle_plugin.gradle .android/config/setting_gradle_plugin.gradle
 
-    if [ `grep -c 'setting_gradle_plugin.gradle' .android/settings.gradle` -eq '1' ]; then
-        echo ".android/settings.gradle 中 已存在 ！！！"
-    else
-        echo ".android/settings.gradle 中 不存在，去编辑"
-        sed -i '' '$a\
-        apply from: "./config/setting_gradle_plugin.gradle"
-        ' .android/settings.gradle
-    fi
+        if [ `grep -c 'setting_gradle_plugin.gradle' .android/settings.gradle` -eq '1' ]; then
+            echo ".android/settings.gradle 中 已存在 ！！！"
+        else
+            echo ".android/settings.gradle 中 不存在，去编辑"
+            sed -i '' '$a\
+            apply from: "./config/setting_gradle_plugin.gradle"
+            ' .android/settings.gradle
+        fi
 
-    if [ $? -eq 0 ]; then
-        echo '.android/settings.gradle 中 脚本插入 fat-aar 成功 !!!'
-    else
-        echo '.android/settings.gradle 中 脚本插入 fat-aar 出错 !!!'
-        exit 1
-    fi
+        if [ $? -eq 0 ]; then
+            echo '.android/settings.gradle 中 脚本插入 fat-aar 成功 !!!'
+        else
+            echo '.android/settings.gradle 中 脚本插入 fat-aar 出错 !!!'
+            exit 1
+        fi
 
-    if [ `grep -c 'com.kezong:fat-aar' .android/build.gradle` -eq '1' ]; then
-        echo "com.kezong:fat-aar:1.0.3 已存在 ！！！"
-    else
-        echo "com.kezong:fat-aar:1.0.3 不存在，去添加"
-        sed -i '' '10 a\
-        classpath "com.kezong:fat-aar:1.0.3"
-        ' .android/build.gradle
-    fi
+        if [ `grep -c 'com.kezong:fat-aar' .android/build.gradle` -eq '1' ]; then
+            echo "com.kezong:fat-aar:1.0.3 已存在 ！！！"
+        else
+            echo "com.kezong:fat-aar:1.0.3 不存在，去添加"
+            sed -i '' '10 a\
+            classpath "com.kezong:fat-aar:1.0.3"
+            ' .android/build.gradle
+        fi
 
-    # flutter/build.gradle 中添加fat-aar 依赖 和 dependencies_gradle_plugin
-    if [ `grep -c "com.kezong.fat-aar" .android/Flutter/build.gradle` -eq '1' ]; then
-        echo "Flutter/build.gradle 中 com.kezong:fat-aar 已存在 ！！！"
-    else
-        echo "Flutter/build.gradle 中 com.kezong:fat-aar 不存在，去添加"
-        sed -i '' '$a\
-        apply plugin: "com.kezong.fat-aar"
-        ' .android/Flutter/build.gradle
-    fi
+        # flutter/build.gradle 中添加fat-aar 依赖 和 dependencies_gradle_plugin
+        if [ `grep -c "com.kezong.fat-aar" .android/Flutter/build.gradle` -eq '1' ]; then
+            echo "Flutter/build.gradle 中 com.kezong:fat-aar 已存在 ！！！"
+        else
+            echo "Flutter/build.gradle 中 com.kezong:fat-aar 不存在，去添加"
+            sed -i '' '$a\
+            apply plugin: "com.kezong.fat-aar"
+            ' .android/Flutter/build.gradle
+        fi
 
-    cp bak/dependencies_gradle_plugin.gradle .android/config/dependencies_gradle_plugin.gradle
-    if [ `grep -c 'dependencies_gradle_plugin' .android/Flutter/build.gradle` -eq '1' ]; then
-        echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 已存在 ！！！"
-    else
-        echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 不存在，去添加"
-        sed -i '' '$a\
-        apply from: "../config/dependencies_gradle_plugin.gradle"
-        ' .android/Flutter/build.gradle
-    fi
-  fi
+        cp bak/dependencies_gradle_plugin.gradle .android/config/dependencies_gradle_plugin.gradle
+        if [ `grep -c 'dependencies_gradle_plugin' .android/Flutter/build.gradle` -eq '1' ]; then
+            echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 已存在 ！！！"
+        else
+            echo "Flutter/build.gradle 中 dependencies_gradle_plugin.gradle 不存在，去添加"
+            sed -i '' '$a\
+            apply from: "../config/dependencies_gradle_plugin.gradle"
+            ' .android/Flutter/build.gradle
+        fi
+      fi
 }
 
 
@@ -198,7 +217,7 @@ else
     exit 1
 fi
 
-# step 6 build aar
+# step 6 build aar ，生成 aar ， 然后上传到maven
 echo 'build aar'
 cd ${projectDir}/.android
 gradle clean flutter:assembleRelease uploadArchives --info
@@ -216,8 +235,8 @@ echo 'remove assets/lib'
 cd ${projectDir}/.android/Flutter/src/main/
 rm -rf assets
 rm -rf lib
-
 delFatAarConfig
 
+echo '<<<<<<<<<<<<<<<<<<<<<<<<<< 结束 >>>>>>>>>>>>>>>>>>>>>>>>>'
 echo '打包成功 : yqx-flutter.aar...................！ '
 exit
