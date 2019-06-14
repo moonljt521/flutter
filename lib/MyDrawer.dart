@@ -8,6 +8,7 @@ import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/countdown/CountDownPage.dart';
 import 'package:flutter_first_demo/custom_widget/custom_widget_list_page.dart';
 import 'package:flutter_first_demo/datepicker/datepicker.dart';
+import 'package:flutter_first_demo/flutter_key/flutter_key_main.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/touch/test_touch.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
@@ -97,7 +98,20 @@ class MyDrawer extends StatelessWidget {
 
             },
           ),
-          
+
+          ListTile(
+            title: Text('flutter Key 使用'),
+            leading: CircleAvatar(
+              child: Icon(Icons.access_time),
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              RouterUtil.route4Animation(context, KeyPage(),RouterUtil.FADE);
+
+            },
+          ),
+
+
           ListTile(
             title: Text('测试StreamBuilder更新UI'),
             leading: CircleAvatar(
