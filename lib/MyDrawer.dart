@@ -22,7 +22,6 @@ class MyDrawer extends StatelessWidget {
       accountName:
          Container(
           margin: EdgeInsets.only(top : 20),
-          padding: EdgeInsets.only(top : 10, right : 10, bottom: 10),
           child: Text("moon",
             style: TextStyle(
               fontSize: 20
