@@ -15,7 +15,7 @@
     <application
         android:name="com.moon.myflutterpluginexample.MyApp"
         android:label="我的flutter"
-        android:icon="@mipmap/app_icon">
+        android:icon="@drawable/launch_background">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

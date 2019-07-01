@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
 import 'package:flutter_first_demo/bloc/test_bloc_page.dart';
 import 'package:flutter_first_demo/bloc/test_stream_page.dart';
+import 'package:flutter_first_demo/cached_network_image/cached_network_image_page.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/countdown/CountDownPage.dart';
 import 'package:flutter_first_demo/custom_widget/custom_widget_list_page.dart';
@@ -110,7 +111,6 @@ class MyDrawer extends StatelessWidget {
             },
           ),
 
-
           ListTile(
             title: Text('测试StreamBuilder更新UI'),
             leading: CircleAvatar(
@@ -148,6 +148,16 @@ class MyDrawer extends StatelessWidget {
             ),
             onTap: () {
               RouterUtil.routeAnimation(context, MyTouch());
+            },
+          ),
+
+          ListTile(
+            title: Text('Glide 封装'),
+            leading: CircleAvatar(
+              child: Icon(Icons.details),
+            ),
+            onTap: () {
+              RouterUtil.routeAnimation(context, CachedNetWorkPage());
             },
           ),
 
