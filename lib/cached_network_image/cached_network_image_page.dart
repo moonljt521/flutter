@@ -40,9 +40,11 @@ class MyHomePage extends StatelessWidget {
               width: 100.0,
               height: 100.0,
               radius: 36,
+              clipOval:false,
               placeIcon: "images/avatar_default_icon.webp",
               errorIcon: "images/avatar_default_icon.webp",
-              imageUrl: "https://static.17xueba.com/test/server/image/2019/06/20190619203453658306.jpg",
+//              imageUrl: "https://static.17xueba.com/test/server/image/2019/06/20190619203453658306.jpg",
+              imageUrl: "https://static.17xueba.com/test/server/image/2019/06/20190614172810443568.jpg",
             ),
 
 
@@ -53,19 +55,20 @@ class MyHomePage extends StatelessWidget {
               clipOval: true,
               placeIcon: "images/avatar_default_icon.webp",
               errorIcon: "images/avatar_default_icon.webp",
-              imageUrl: "https://static.17xueba.com/test/server/image/2019/06/20190619203453658306.jpg",
+//              imageUrl: "https://static.17xueba.com/test/server/image/2019/06/20190619203453658306.jpg",
+              imageUrl: "https://static.17xueba.com/test/server/image/2019/06/20190613143657379734.jpg",
             ),
 
             Text("3 Container 实现圆形"),
             new Container(
-              width: 200.0,
-              height: 200.0,
+              width: 100.0,
+              height: 100.0,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.fitWidth,
                   image:  new CachedNetworkImageProvider(
-                      "https://static.17xueba.com/test/server/image/2019/06/20190619203453658306.jpg"),
+                      "https://static.17xueba.com/test/server/image/2019/06/20190614172810443568.jpg"),
                 ),
               ),
             ),
