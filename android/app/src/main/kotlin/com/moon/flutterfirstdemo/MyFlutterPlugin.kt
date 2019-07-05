@@ -25,8 +25,11 @@ class MyFlutterPlugin : MethodCallHandler {
         } else if (call.method == "toast") {
             val msg: String? = call.argument("message");
             Toast.makeText(MyApp.application, msg, Toast.LENGTH_SHORT).show()
-        } else {
+        } else if (call.method == "onePxDialog"){
             result.notImplemented()
+
+        } else {
+
         }
     }
 }

@@ -16,4 +16,11 @@ class MyFlutterPlugin {
     _channel.invokeMethod('toast', {"message" : message});
   }
 
+  // 调用一个1像素大小的原生的dialog
+  static Future showHideDialog() {
+    _channel.invokeMethod('onePxDialog');
+  }
+
+
+
 }

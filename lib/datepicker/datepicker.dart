@@ -39,40 +39,6 @@ class DatePickerState extends State<DatePickerPage> {
     _date = now.day;
   }
 
-  /// Display date picker.
-  void _showDatePicker() {
-    final bool showTitleActions = false;
-    DatePicker.showDatePicker(
-      context,
-      showTitleActions: _showTitleActions,
-      minYear: 1970,
-      maxYear: 2020,
-      initialYear: _year,
-      initialMonth: _month,
-      initialDate: _date,
-      confirm: Text(
-        '确定',
-        style: TextStyle(color: Colors.red),
-      ),
-      cancel: Text(
-        '取消',
-        style: TextStyle(color: Colors.cyan),
-      ),
-      locale: _lang,
-      dateFormat: _format,
-      onChanged: (year, month, date) {
-        debugPrint('onChanged date: $year-$month-$date');
-
-        if (!showTitleActions) {
-          _changeDatetime(year, month, date);
-        }
-      },
-      onConfirm: (year, month, date) {
-        _changeDatetime(year, month, date);
-      },
-    );
-  }
-
   void _changeDatetime(int year, int month, int date) {
     setState(() {
       _year = year;
@@ -102,7 +68,6 @@ class DatePickerState extends State<DatePickerPage> {
             ),
             // show title actions checkbox
             Row(
-
               children: <Widget>[
                 Text(
                   'Show title actions',
@@ -177,5 +142,43 @@ class DatePickerState extends State<DatePickerPage> {
       ),
     );
   }
+
+
+
+
+  /// Display date picker.
+  void _showDatePicker() {
+    final bool showTitleActions = false;
+    DatePicker.showDatePicker(
+      context,
+      showTitleActions: _showTitleActions,
+      minYear: 1970,
+      maxYear: 2020,
+      initialYear: _year,
+      initialMonth: _month,
+      initialDate: _date,
+      confirm: Text(
+        '确定',
+        style: TextStyle(color: Colors.red),
+      ),
+      cancel: Text(
+        '取消',
+        style: TextStyle(color: Colors.cyan),
+      ),
+      locale: _lang,
+      dateFormat: _format,
+      onChanged: (year, month, date) {
+        debugPrint('onChanged date: $year-$month-$date');
+
+        if (!showTitleActions) {
+          _changeDatetime(year, month, date);
+        }
+      },
+      onConfirm: (year, month, date) {
+        _changeDatetime(year, month, date);
+      },
+    );
+  }
+
 
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
 import 'package:flutter_first_demo/bloc/test_bloc_page.dart';
 import 'package:flutter_first_demo/bloc/test_stream_page.dart';
+import 'package:flutter_first_demo/bottom_picker_page/bottom_picker.dart';
 import 'package:flutter_first_demo/cached_network_image/cached_network_image_page.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/countdown/CountDownPage.dart';
@@ -54,6 +55,18 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           userHeader,
+
+          ListTile(
+            title: Text('自定义封装波轮菜单'),
+            leading: CircleAvatar(
+              child: Icon(Icons.details),
+            ),
+            onTap: () {
+              RouterUtil.routeAnimation(context, BottomPicker());
+            },
+          ),
+
+
           ListTile(
               title: Text('计算器'),
               leading: CircleAvatar(
