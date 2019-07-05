@@ -53,7 +53,8 @@ class _ModalBottomSheetState extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       child: Container(
-                          padding: EdgeInsets.only(left: 20,top: 15,bottom: 15),
+                          color: Colors.white,
+                          padding: EdgeInsets.only(left: 20,top: 15,bottom: 15,right: 20),
                           child: Text("取消",style: TextStyle(fontSize: 17,color: const Color(0xFF4A5060),decoration: TextDecoration.none),)
                       ),
                     ),
@@ -65,6 +66,7 @@ class _ModalBottomSheetState extends StatelessWidget {
                         checkFunction(pickData[_currentIndex]);
                       },
                       child: Container(
+                          color: Colors.white,
                           padding: EdgeInsets.only(left: 20,top: 15,bottom: 15,right: 20),
                           child: Text("确定",style: TextStyle(fontSize: 17,color: const Color(0xFFF95862),decoration: TextDecoration.none),)
                       ),

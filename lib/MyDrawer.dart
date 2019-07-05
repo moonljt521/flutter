@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
 import 'package:flutter_first_demo/bloc/test_bloc_page.dart';
 import 'package:flutter_first_demo/bloc/test_stream_page.dart';
-import 'package:flutter_first_demo/bottom_picker_page/bottom_picker.dart';
+import 'package:flutter_first_demo/bottom_picker_page/bottom_page.dart';
 import 'package:flutter_first_demo/cached_network_image/cached_network_image_page.dart';
 import 'package:flutter_first_demo/calculator/Calculator.dart';
 import 'package:flutter_first_demo/countdown/CountDownPage.dart';
