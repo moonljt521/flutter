@@ -157,10 +157,11 @@ class DatePickerState extends State<DatePickerPage> {
       initialYear: _year,
       initialMonth: _month,
       initialDate: _date,
-      confirm: Text(
-        '确定',
-        style: TextStyle(color: Colors.red),
-      ),
+      confirm:   Container(
+        color: Colors.white,
+        padding: EdgeInsets.only(left: 20,top: 10,bottom: 15,right: 20),
+        child: Text("确定",style: TextStyle(fontSize: 17,color: const Color(0xFFF95862),decoration: TextDecoration.none),)
+    ),
       cancel: Text(
         '取消',
         style: TextStyle(color: Colors.cyan),
