@@ -10,7 +10,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: '>=2.19.4 <3.0.0'
 
 dependencies:
   flutter:
@@ -29,7 +29,7 @@ dependencies:
 #  适配
   flutter_screenutil: ^0.3.0
 #  ！！！
-  dio: ^1.0.4
+  dio: ^5.0.4
   package_info: ^0.3.2
 #  rxDrat
   rxdart: ^0.20.0
