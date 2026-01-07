@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /**
@@ -6,7 +5,7 @@ import 'package:flutter/material.dart';
  */
 abstract class BaseStatefulWidget extends StatefulWidget {
 
-  State<BaseStatefulWidget> state;
+  // Removed mutable state field to fix immutability warning
 
   @protected
   Widget getWidget(BuildContext context);
@@ -17,13 +16,14 @@ abstract class BaseStatefulWidget extends StatefulWidget {
   @override
   createState() => _BaseState();
 
+  @protected
   void initState() {}
 
+  @protected
   void dispose() {}
 
   @protected
   backPopPage(BuildContext context){
-      if(state == null) return;
      Navigator.pop(context, true);
   }
 }
@@ -38,7 +38,6 @@ class _BaseState extends State<BaseStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    widget.state = this;
     return Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.white,
@@ -65,6 +64,7 @@ class _BaseState extends State<BaseStatefulWidget> {
           onWillPop: () {
             print("返回键点击了");
             widget.backPopPage(context);
+            return Future.value(false);
           })
     );
   }

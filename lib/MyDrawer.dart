@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/ReciteWords.dart';
 import 'package:flutter_first_demo/bloc/test_bloc_page.dart';
@@ -107,7 +106,7 @@ class MyDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).pop();
-              RouterUtil.route4Animation(context, CountDownPage(),RouterUtil.FADE);
+              RouterUtil.route4Animation(context, CountDownPage(),type: RouterUtil.FADE);
 
             },
           ),
@@ -119,7 +118,7 @@ class MyDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).pop();
-              RouterUtil.route4Animation(context, KeyPage(),RouterUtil.FADE);
+              RouterUtil.route4Animation(context, KeyPage(),type: RouterUtil.FADE);
 
             },
           ),
@@ -177,7 +176,7 @@ class MyDrawer extends StatelessWidget {
 
         ],
       ),
-    );;
+    );
   }
 
 }

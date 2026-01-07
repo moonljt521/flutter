@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 typedef void PressOperationCallback(Number number);
 
 abstract class Number {
-  String display;
+  String get display;
   String apply(String original);
 }
 
 class NormalNumber extends Number {
-  NormalNumber(String display) {
-    this.display = display;
-  }
+  final String _display;
+  NormalNumber(this._display);
+  
+  @override
+  String get display => _display;
+
+  @override
   apply(original) {
     print("NormalNumber.apply" + original);
 
@@ -24,9 +27,6 @@ class NormalNumber extends Number {
   }
 }
 
-/**
- * 矫正正负值
- */
 class SymbolNumber extends Number {
   @override
   String get display => '+/-';
@@ -61,8 +61,7 @@ class DecimalNumber extends Number {
 }
 
 class NumberButtonLine extends StatelessWidget {
-  NumberButtonLine({@required this.array, this.onPress})
-      : assert(array != null);
+  NumberButtonLine({required this.array, required this.onPress});
   final List<Number> array;
   final PressOperationCallback onPress;
 
@@ -88,9 +87,7 @@ class NumberButtonLine extends StatelessWidget {
 }
 
 class NumberButton extends StatefulWidget {
-  const NumberButton({@required this.number, @required this.pad, this.onPress})
-      : assert(number != null),
-        assert(pad != null);
+  const NumberButton({required this.number, required this.pad, required this.onPress});
   final Number number;
   final EdgeInsetsGeometry pad;
   final PressOperationCallback onPress;
@@ -102,23 +99,24 @@ class NumberButtonState extends State<NumberButton> {
   bool pressed = false;
   @override
   Widget build(BuildContext context) {
+    // Removed null check for widget.pad as it is required non-nullable
     return Expanded(
         flex: 1,
         child: Padding(
           padding: widget.pad,
           child: GestureDetector(
             onTap: () {
-              if (widget.onPress != null) {
-                widget.onPress(widget.number);
-                setState(() {
-                  pressed = true;
-                });
-                Future.delayed(
-                    const Duration(milliseconds: 200),
-                    () => setState(() {
-                          pressed = false;
-                        }));
-              }
+              // Removed null check for onPress
+              widget.onPress(widget.number);
+              setState(() {
+                pressed = true;
+              });
+              Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () => setState(() {
+                        pressed = false;
+                      }));
+              
             },
             child: Container(
               alignment: Alignment.center,

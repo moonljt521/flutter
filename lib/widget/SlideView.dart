@@ -3,28 +3,25 @@ import 'package:flutter_first_demo/utils/RouterUtil.dart';
 import 'package:flutter_first_demo/webview_container/webview_page.dart';
 
 class SlideView extends StatefulWidget {
-  var data;
+  final List? data;
 
   SlideView(this.data);
 
   @override
   State<StatefulWidget> createState() {
-    return SlideViewState(data);
+    return SlideViewState();
   }
 }
 
 class SlideViewState extends State<SlideView>
     with SingleTickerProviderStateMixin {
-  TabController tabController;
-  List data;
-
-  SlideViewState(this.data);
+  late TabController tabController;
 
   @override
   void initState() {
     super.initState();
     tabController =
-        TabController(length: data == null ? 0 : data.length, vsync: this);
+        TabController(length: widget.data?.length ?? 0, vsync: this);
   }
 
   @override
@@ -36,9 +33,9 @@ class SlideViewState extends State<SlideView>
   @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
-    if (data != null && data.length > 0) {
-      for (var i = 0; i < data.length; i++) {
-        var item = data[i];
+    if (widget.data != null && widget.data!.isNotEmpty) {
+      for (var i = 0; i < widget.data!.length; i++) {
+        var item = widget.data![i];
         var imgUrl = item['imagePath'];
         var title = item['title'];
         item['link'] = item['url'];

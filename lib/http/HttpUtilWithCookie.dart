@@ -10,9 +10,9 @@ class HttpUtil {
 
 
   static void get(String url, Function callback,
-      {Map<String, String> params,
-      Map<String, String> headers,
-      Function errorCallback}) async {
+      {Map<String, String>? params,
+      Map<String, String>? headers,
+      Function? errorCallback}) async {
     //偷懒..
     if (!url.startsWith("http")) {
       url = Api.BaseUrl + url;
@@ -34,9 +34,9 @@ class HttpUtil {
   }
 
   static void post(String url, Function callback,
-      {Map<String, String> params,
-      Map<String, String> headers,
-      Function errorCallback}) async {
+      {Map<String, String>? params,
+      Map<String, String>? headers,
+      Function? errorCallback}) async {
     if (!url.startsWith("http")) {
       url = Api.BaseUrl + url;
     }
@@ -46,10 +46,10 @@ class HttpUtil {
   }
 
   static Future _request(String url, Function callback,
-      {String method,
-      Map<String, String> headers,
-      Map<String, String> params,
-      Function errorCallback}) async {
+      {String? method,
+      Map<String, String>? headers,
+      Map<String, String>? params,
+      Function? errorCallback}) async {
     String errorMsg;
     int errorCode;
     var data;
@@ -70,10 +70,10 @@ class HttpUtil {
       if (POST == method) {
         print("POST:URL="+url);
         print("POST:BODY="+paramMap.toString());
-        res = await http.post(url, headers: headerMap, body: paramMap);
+        res = await http.post(Uri.parse(url), headers: headerMap, body: paramMap);
       } else {
         print("GET:URL="+url);
-        res = await http.get(url, headers: headerMap);
+        res = await http.get(Uri.parse(url), headers: headerMap);
       }
 
       if (res.statusCode != 200) {
@@ -103,19 +103,19 @@ class HttpUtil {
 
       // callback返回data,数据类型为dynamic
       //errorCallback中为了方便我直接返回了String类型的errorMsg
-      if (callback != null) {
-        if (errorCode >= 0) {
-          callback(data);
-        } else {
-          _handError(errorCallback, errorMsg);
-        }
+      // Removed null check for callback
+      if (errorCode >= 0) {
+        callback(data);
+      } else {
+        _handError(errorCallback, errorMsg);
       }
+      
     } catch (exception) {
       _handError(errorCallback, exception.toString());
     }
   }
 
-  static void _handError(Function errorCallback,String errorMsg){
+  static void _handError(Function? errorCallback,String errorMsg){
     if (errorCallback != null) {
       errorCallback(errorMsg);
     }

@@ -1,6 +1,4 @@
 
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/news/my_tab_widget.dart';
 import 'package:flutter_first_demo/news/news_list_page.dart';
@@ -39,6 +37,7 @@ class _FoundPageState extends State<NewsPage> with AutomaticKeepAliveClientMixin
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return
       Container(
         child: DefaultTabController(

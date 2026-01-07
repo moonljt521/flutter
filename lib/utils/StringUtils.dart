@@ -3,11 +3,7 @@ import 'package:flutter_first_demo/constant/colors.dart';
 
 class StringUtils {
   // 保存用户登录信息，data中包含了token等信息
-  static TextSpan getTextSpan(String text, String key) {
-    if (text == null || key == null) {
-      return null;
-    }
-
+  static TextSpan? getTextSpan(String? text, String? key) {
     if (text == null || key == null) {
       return null;
     }
@@ -23,14 +19,16 @@ class StringUtils {
 
     List<String> split = textOrigin.split(key);
 
-    List<TextSpan> list = List<TextSpan>();
+    List<TextSpan> list = [];
 
     for (int i = 0; i < split.length; i++) {
       list.add(TextSpan(text: split[i]));
       list.add(textSpan);
     }
 
-    list.removeAt(list.length - 1);
+    if (list.isNotEmpty) {
+      list.removeAt(list.length - 1);
+    }
 
     return TextSpan(children: list);
   }

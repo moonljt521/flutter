@@ -24,8 +24,10 @@ class CalculatorState extends State<StatefulWidget> {
     if (results.length > 0) {
       var result = results[results.length - 1];
       if (display == '=') {
-        result.result = result.oper.calculate(
-            double.parse(result.firstNum), double.parse(result.secondNum));
+        if (result.firstNum != null && result.secondNum != null && result.oper != null) {
+          result.result = result.oper!.calculate(
+              double.parse(result.firstNum!), double.parse(result.secondNum!));
+        }
       } else if (display == 'C') {
         results.removeLast();
       }
@@ -78,11 +80,11 @@ class CalculatorState extends State<StatefulWidget> {
       if (results.length > 0) {
         var result = results[results.length - 1];
         if (result.result != null) {
-          display = format(result.result);
+          display = format(result.result!);
         } else if (result.secondNum != null && result.oper != null) {
-          display = result.secondNum;
+          display = result.secondNum!;
         } else if (result.firstNum != null) {
-          display = result.firstNum;
+          display = result.firstNum!;
         }
       }
       currentDisplay = display;

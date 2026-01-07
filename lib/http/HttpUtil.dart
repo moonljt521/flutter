@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
 import 'package:flutter_first_demo/http/Api.dart';
-import 'package:flutter_first_demo/utils/Toast.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
@@ -22,10 +20,7 @@ import 'dart:convert';
 //这里只封装了常见的get和post请求类型,不带Cookie
 class HttpUtil {
 
-  static HttpUtil instance;
-
-  Dio _dio;
-  Options options;
+  static HttpUtil? instance;
 
   static const String GET = "get";
   static const String POST = "post";
@@ -38,9 +33,9 @@ class HttpUtil {
 
 
   static void get(String url, num source ,Function callback,
-      {Map<String, String> params,
-        Map<String, String> headers,
-        Function errorCallback}) async {
+      {Map<String, String>? params,
+        Map<String, String>? headers,
+        Function? errorCallback}) async {
     //偷懒..
     if (!url.startsWith("http")) {
       url = Api.BaseUrl + url;
@@ -62,9 +57,9 @@ class HttpUtil {
   }
 
   static void post(String url, num source ,Function callback,
-      {Map<String, String> params,
-        Map<String, String> headers,
-        Function errorCallback}) async {
+      {Map<String, String>? params,
+        Map<String, String>? headers,
+        Function? errorCallback}) async {
     if (!url.startsWith("http")) {
       url = Api.BaseUrl + url;
     }
@@ -73,13 +68,13 @@ class HttpUtil {
         headers: headers, params: params, errorCallback: errorCallback);
   }
 
-  static Future _request(String url, num source , Function callback,{String method,
-        Map<String, String> headers,
-        Map<String, String> params,
-        Function errorCallback}) async {
+  static Future _request(String url, num source , Function callback,{String? method,
+        Map<String, String>? headers,
+        Map<String, String>? params,
+        Function? errorCallback}) async {
 
     String errorMsg;
-    int errorCode;
+    int? errorCode;
     var data;
     try {
       Map<String, String> headerMap = headers == null ? Map() : headers;
@@ -90,10 +85,10 @@ class HttpUtil {
       if (POST == method) {
         print("POST:URL="+url);
         print("POST:BODY="+paramMap.toString());
-        res = await http.post(url, headers: headerMap, body: paramMap);
+        res = await http.post(Uri.parse(url), headers: headerMap, body: paramMap);
       } else {
         print("GET:URL="+url);
-        res = await http.get(url, headers: headerMap);
+        res = await http.get(Uri.parse(url), headers: headerMap);
       }
 
       if (res.statusCode != 200) {
@@ -114,13 +109,13 @@ class HttpUtil {
 
         // callback返回data,数据类型为dynamic
         //errorCallback中为了方便我直接返回了String类型的errorMsg
-        if (callback != null) {
-          if (errorCode >= 0) {
-            callback(data);
-          } else {
-            _handError(errorCallback, errorMsg);
-          }
+        // Removed callback != null check
+        if (errorCode != null && errorCode >= 0) {
+          callback(data);
+        } else {
+          _handError(errorCallback, errorMsg);
         }
+        
       }else if(source == SOURCE_JUHE){
         data = map['result'];
         if(data != null){
@@ -144,7 +139,7 @@ class HttpUtil {
     }
   }
 
-  static void _handError(Function errorCallback,String errorMsg){
+  static void _handError(Function? errorCallback,String errorMsg){
     if (errorCallback != null) {
       errorCallback(errorMsg);
     }
@@ -154,6 +149,6 @@ class HttpUtil {
 
 
 class ErrorBody {
-   num type ;
-   String errorMsg;
+   num? type ;
+   String? errorMsg;
 }

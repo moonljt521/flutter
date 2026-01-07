@@ -1,20 +1,19 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'dart:math' as math;
 
 class _DrawProgress extends CustomPainter {
   final Color color;
   final double radius;
-  double angle;
-  AnimationController animation;
+  final double angle;
+  final AnimationController? animation;
 
-  Paint circleFillPaint;
-  Paint progressPaint;
-  Rect rect;
+  late Paint circleFillPaint;
+  late Paint progressPaint;
+  late Rect rect;
 
   _DrawProgress(this.color, this.radius,
-      {double this.angle, AnimationController this.animation}) {
+      {required this.angle, this.animation}) {
     circleFillPaint = Paint();
     circleFillPaint.color = Colors.white;
     circleFillPaint.style = PaintingStyle.fill;
@@ -25,8 +24,8 @@ class _DrawProgress extends CustomPainter {
     progressPaint.strokeCap = StrokeCap.round;
     progressPaint.strokeWidth = 4.0;
 
-    if (animation != null && !animation.isAnimating) {
-      animation.forward();
+    if (animation != null && !animation!.isAnimating) {
+      animation!.forward();
     }
   }
 
@@ -37,10 +36,10 @@ class _DrawProgress extends CustomPainter {
     Offset center = Offset(x, y);
     canvas.drawCircle(center, radius - 2, circleFillPaint);
     rect = Rect.fromCircle(center: center, radius: radius);
-    angle = angle * (-1);
+    double drawAngle = angle * (-1);
     double startAngle = -math.pi / 2;
-    double sweepAngle = math.pi * angle / 180;
-    print("draw paint-------------------= $startAngle, $sweepAngle");
+    double sweepAngle = math.pi * drawAngle / 180;
+    // print("draw paint-------------------= $startAngle, $sweepAngle");
     // canvas.drawArc(rect, startAngle, sweepAngle, false, progressPaint);
     //1.0.0之后换种绘制圆弧的方式:
     Path path = Path();
@@ -59,17 +58,17 @@ class SkipDownTimeProgress extends StatefulWidget {
   final double radius;
   final Duration duration;
   final Size size;
-  String skipText;
-  OnSkipClickListener clickListener;
+  final String skipText;
+  final OnSkipClickListener? clickListener;
 
   SkipDownTimeProgress(
       this.color,
       this.radius,
       this.duration,
       this.size, {
-        Key key,
-        String this.skipText = "跳过",
-        OnSkipClickListener this.clickListener,
+        Key? key,
+        this.skipText = "跳过",
+        this.clickListener,
       }) : super(key: key);
 
   @override
@@ -80,7 +79,7 @@ class SkipDownTimeProgress extends StatefulWidget {
 
 class _SkipDownTimeProgressState extends State<SkipDownTimeProgress>
     with TickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
   double curAngle = 360.0;
 
   @override
@@ -109,7 +108,7 @@ class _SkipDownTimeProgressState extends State<SkipDownTimeProgress>
   void _onSkipClick() {
     if (widget.clickListener != null) {
       print('skip onclick ---------------');
-      widget.clickListener.onSkipClick();
+      widget.clickListener!.onSkipClick();
     }
   }
 
@@ -124,12 +123,12 @@ class _SkipDownTimeProgressState extends State<SkipDownTimeProgress>
   }
 
   void _change() {
-    print('ange == $animationController.value');
+    // print('ange == $animationController.value');
     double ange =
     double.parse(((animationController.value * 360) ~/ 1).toString());
     setState(() {
       curAngle = (360.0 - ange);
-      print(" curAnge = " + curAngle.toString());
+      // print(" curAnge = " + curAngle.toString());
       if(curAngle == 1){
         curAngle = 0;
       }
@@ -164,4 +163,3 @@ class _SkipDownTimeProgressState extends State<SkipDownTimeProgress>
 abstract class OnSkipClickListener {
   void onSkipClick();
 }
-

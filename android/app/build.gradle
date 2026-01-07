@@ -26,7 +26,8 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 28
+    namespace 'com.moon.flutterfirstdemo'
+    compileSdk 35
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -39,11 +40,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.moon.flutterfirstdemo"
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
             // 设置支持的 SO 库构架
@@ -52,6 +52,15 @@ android {
             abiFilters 'armeabi',"armeabi-v7a","arm64-v8a"
         }
 
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
     signingConfigs {

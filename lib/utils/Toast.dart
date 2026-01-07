@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/plugin/my_flutter_plugin.dart';
 
 class Toast {
-  static OverlayEntry _overlayEntry; //toast靠它加到屏幕上
+  static OverlayEntry? _overlayEntry; //toast靠它加到屏幕上
   static bool _showing = false; //toast是否正在showing
-  static DateTime _startedTime; //开启一个新toast的当前时间，用于对比是否已经展示了足够时间
-  static String _msg;
+  static DateTime? _startedTime; //开启一个新toast的当前时间，用于对比是否已经展示了足够时间
+  static String? _msg;
 
 
   static void toast(String msg){
@@ -18,11 +17,10 @@ class Toast {
       BuildContext context,
       String msg,
       ) async {
-    assert(msg != null);
     _msg = msg;
     _startedTime = DateTime.now();
     //获取OverlayState
-    OverlayState overlayState = Overlay.of(context);
+    OverlayState? overlayState = Overlay.of(context);
     _showing = true;
     if (_overlayEntry == null) {
       _overlayEntry = OverlayEntry(
@@ -43,17 +41,18 @@ class Toast {
                   ),
                 )),
           ));
-      overlayState.insert(_overlayEntry);
-    } else {
+      
+       overlayState.insert(_overlayEntry!);
+        } else {
       //重新绘制UI，类似setState
-      _overlayEntry.markNeedsBuild();
+      _overlayEntry?.markNeedsBuild();
     }
     await Future.delayed(Duration(milliseconds: 1000)); //等待两秒
 
     //2秒后 到底消失不消失
-    if (DateTime.now().difference(_startedTime).inMilliseconds >= 1000) {
+    if (_startedTime != null && DateTime.now().difference(_startedTime!).inMilliseconds >= 1000) {
       _showing = false;
-      _overlayEntry.markNeedsBuild();
+      _overlayEntry?.markNeedsBuild();
     }
   }
 
@@ -65,7 +64,7 @@ class Toast {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
           child: Text(
-            _msg,
+            _msg ?? "",
             style: TextStyle(
               fontSize: 14.0,
               color: Colors.white,
@@ -76,4 +75,3 @@ class Toast {
     );
   }
 }
-

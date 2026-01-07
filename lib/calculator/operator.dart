@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 typedef void PressOperationCallback(Operator oper);
 
 abstract class Operator {
-  String display;
-  Color color;
+  String get display;
+  Color get color;
 
   num calculate(num first, num second);
 }
@@ -16,7 +15,7 @@ class AddOperator extends Operator {
   String get display => '+';
 
   @override
-  Color get color => Colors.pink[300];
+  Color get color => Colors.pink[300]!;
 
   @override
   calculate(first, second) {
@@ -29,7 +28,7 @@ class SubOperator extends Operator {
   String get display => '-';
 
   @override
-  Color get color => Colors.orange[300];
+  Color get color => Colors.orange[300]!;
 
   @override
   calculate(first, second) {
@@ -42,7 +41,7 @@ class MultiOperator extends Operator {
   String get display => 'x';
 
   @override
-  Color get color => Colors.lightBlue[300];
+  Color get color => Colors.lightBlue[300]!;
 
   @override
   calculate(first, second) {
@@ -55,7 +54,7 @@ class DivisionOperator extends Operator {
   String get display => '÷';
 
   @override
-  Color get color => Colors.purple[300];
+  Color get color => Colors.purple[300]!;
 
   @override
   calculate(first, second) {
@@ -71,7 +70,7 @@ class DelOperator extends Operator {
   String get display => 'del';
 
   @override
-  Color get color => Colors.red[800];
+  Color get color => Colors.red[800]!;
 
   @override
   calculate(first, second) {
@@ -81,10 +80,10 @@ class DelOperator extends Operator {
 
 class OperatorGroup extends StatelessWidget {
 
-  OperatorGroup(this.onOperatorButtonPressed , currentDisplay);
+  OperatorGroup(this.onOperatorButtonPressed , this.currentDisplay);
 
   final PressOperationCallback onOperatorButtonPressed;
-  String currentDisplay;
+  final String currentDisplay;
 
 
   @override
@@ -120,11 +119,10 @@ class OperatorButton extends StatefulWidget {
 
   final Operator oper;
   final PressOperationCallback onPress;
-  String showContent ; // 当前输入框内的文本
+  final String? showContent ; // 当前输入框内的文本
 
   OperatorButton({
-    @required this.oper, this.onPress , this.showContent})
-      : assert(Operator != null);
+    required this.oper, required this.onPress , this.showContent});
 
 
   @override
@@ -145,17 +143,16 @@ class OperatorButtonState extends State<OperatorButton> {
             padding: EdgeInsets.all(16.0),
             child: GestureDetector(
               onTap: () {
-                if (widget.onPress != null) {
-                  widget.onPress(widget.oper);
-                  setState(() {
-                    pressed = true;
-                  });
-                  Future.delayed(
-                      const Duration(milliseconds: 200),
-                      () => setState(() {
-                            pressed = false;
-                          }));
-                }
+                // Removed null check for onPress
+                widget.onPress(widget.oper);
+                setState(() {
+                  pressed = true;
+                });
+                Future.delayed(
+                    const Duration(milliseconds: 200),
+                    () => setState(() {
+                          pressed = false;
+                        }));
               },
               child: Container(
                 alignment: Alignment.center,

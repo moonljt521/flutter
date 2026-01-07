@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/news/NewsPage.dart';
 import 'package:flutter_first_demo/home/HomePage.dart';
@@ -16,7 +15,7 @@ class MainPage extends StatefulWidget {
 class _MainState extends State<MainPage> {
 
   int _tabIndex = 0;
-  List<BottomNavigationBarItem> _navigationViews;
+  List<BottomNavigationBarItem> _navigationViews = [];
   var appBarTitles = ['首页', '新闻', '我的'];
 
   var _body;
@@ -37,17 +36,17 @@ class _MainState extends State<MainPage> {
     _navigationViews = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: const Icon(Icons.home),
-        title: Text(appBarTitles[0]),
+        label: appBarTitles[0],
         backgroundColor: Colors.blue,
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.widgets),
-        title: Text(appBarTitles[1]),
+        label: appBarTitles[1],
         backgroundColor: Colors.blue,
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.person),
-        title: Text(appBarTitles[2]),
+        label: appBarTitles[2],
         backgroundColor: Colors.blue,
       ),
     ];
@@ -58,7 +57,7 @@ class _MainState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
 
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+    ScreenUtil.init(context, designSize: Size(750, 1334), minTextAdapt: true);
 
     initData();
 
@@ -70,9 +69,7 @@ class _MainState extends State<MainPage> {
       drawer: MyDrawer(),
 
       bottomNavigationBar: BottomNavigationBar(
-        items: _navigationViews
-            .map((BottomNavigationBarItem navigationView) => navigationView)
-            .toList(),
+        items: _navigationViews,
         currentIndex: _tabIndex,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {

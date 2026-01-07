@@ -1,10 +1,8 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_cupertino_date_picker/locale_message.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter_first_demo/bottom_picker_page/picker_body.dart';
-import 'package:flutter_first_demo/utils/date_format_base.dart';
 import 'package:flutter_first_demo/utils/date_time_utils.dart';
 
 const double _dialogHeight = 210;
@@ -13,29 +11,31 @@ class CommonPicker {
 
   static void showPicker(BuildContext context, List<PickerBody> data , Function checkListener){
     showModalBottomSheet(context: context, builder:(BuildContext context){
-      return _ModalBottomSheetState(pickData: data,checkFunction: checkListener);
+      return _ModalBottomSheet(pickData: data,checkFunction: checkListener);
     });
   }
 
 
-  static void showDatePicker(BuildContext context,Function checkListener ,{Locale locale}){
+  static void showDatePicker(BuildContext context,Function checkListener ,{Locale? locale}){
     showModalBottomSheet(context: context, builder:(BuildContext context){
-      return _ModalBottomSheetDatePickerState(checkFunction: checkListener ,locale: locale,);
+      return _ModalBottomSheetDatePicker(checkFunction: checkListener ,locale: locale,);
     });
   }
 }
 
-class _ModalBottomSheetState extends StatelessWidget {
+class _ModalBottomSheet extends StatefulWidget {
+  final List<PickerBody> pickData;
+  final Function checkFunction;
 
-  Function checkFunction;
+  const _ModalBottomSheet({Key? key, required this.pickData, required this.checkFunction}) : super(key: key);
 
-  PickerBody checkPickBody;
+  @override
+  State<_ModalBottomSheet> createState() => _ModalBottomSheetState();
+}
 
-  List<PickerBody> pickData;
+class _ModalBottomSheetState extends State<_ModalBottomSheet> {
 
   int _currentIndex = 0;
-
-  _ModalBottomSheetState({this.pickData , this.checkFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _ModalBottomSheetState extends StatelessWidget {
                     GestureDetector(
                       onTap: (){
                         Navigator.of(context).pop();
-                        checkFunction(pickData[_currentIndex]);
+                        widget.checkFunction(widget.pickData[_currentIndex]);
                       },
                       child: Container(
                           color: Colors.white,
@@ -94,7 +94,7 @@ class _ModalBottomSheetState extends StatelessWidget {
                           onSelectedItemChanged: (int index) {
                             _currentIndex = index;
                           },
-                          children: pickData.map((checkData){
+                          children: widget.pickData.map((checkData){
                             return Center(child: Text(checkData.value ,style: TextStyle(fontSize: 16,color: const Color(0xFF4A5060)),));
                           }).toList()
                       ),
@@ -104,22 +104,29 @@ class _ModalBottomSheetState extends StatelessWidget {
           )
         ],
       ),
-    );;
+    );
   }
 }
 
-class _ModalBottomSheetDatePickerState extends StatelessWidget {
+class _ModalBottomSheetDatePicker extends StatefulWidget {
+  final Function checkFunction;
+  final Locale? locale;
 
-  Function checkFunction;
+  const _ModalBottomSheetDatePicker({Key? key, required this.checkFunction, this.locale}) : super(key: key);
 
-  PickerBody checkPickBody;
+  @override
+  State<_ModalBottomSheetDatePicker> createState() => _ModalBottomSheetDatePickerState();
+}
 
-  String currentDate;
+class _ModalBottomSheetDatePickerState extends State<_ModalBottomSheetDatePicker> {
 
-  Locale locale;
+  String currentDate = "";
 
-  _ModalBottomSheetDatePickerState({ this.checkFunction ,this.locale});
-
+  @override
+    void initState() {
+      super.initState();
+      currentDate = DateTimeUtils.getFormat(DateTime.now());
+    }
 
    Widget _getDialog(BuildContext context){
      return Container(
@@ -157,7 +164,7 @@ class _ModalBottomSheetDatePickerState extends StatelessWidget {
                         GestureDetector(
                           onTap: (){
                             Navigator.of(context).pop();
-                            checkFunction(currentDate);
+                            widget.checkFunction(currentDate);
                           },
                           child: Container(
                               color: Colors.white,
@@ -202,10 +209,10 @@ class _ModalBottomSheetDatePickerState extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-    if (locale != null) {
+    if (widget.locale != null) {
       return Localizations.override(
         context: context,
-        locale: locale,
+        locale: widget.locale,
         child: _getDialog(context),
       );
     }

@@ -1,14 +1,14 @@
 buildscript {
-    ext.kotlin_version = '1.2.71'
+    ext.kotlin_version = '1.9.0'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 //        maven { url "https://jitpack.io" }
 //        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:8.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -16,7 +16,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 //        maven { url "https://jitpack.io" }
 //        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     }
@@ -30,7 +30,7 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 

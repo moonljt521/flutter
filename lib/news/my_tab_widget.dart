@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 
 class NewsTabLayout extends StatelessWidget{
 
-  String content;
+  final String content;
 
-  String type;
+  final String type;
 
   NewsTabLayout({
-     @required this.type,
-     @required this.content
+     required this.type,
+     required this.content
   }):super();
 
   @override

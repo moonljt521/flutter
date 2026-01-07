@@ -1,7 +1,6 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 
 class DatePickerPage extends StatefulWidget {
   @override
@@ -77,7 +76,7 @@ class DatePickerState extends State<DatePickerPage> {
                   value: _showTitleActions,
                   onChanged: (value) {
                     setState(() {
-                      _showTitleActions = value;
+                      _showTitleActions = value ?? true;
                     });
                   },
                 )
@@ -120,13 +119,13 @@ class DatePickerState extends State<DatePickerPage> {
                 children: <Widget>[
                   Text(
                     'Selected Date:',
-                    style: Theme.of(context).textTheme.subhead,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 12.0),
                     child: Text(
                       '$_datetime',
-                      style: Theme.of(context).textTheme.title,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                 ],
@@ -148,35 +147,21 @@ class DatePickerState extends State<DatePickerPage> {
 
   /// Display date picker.
   void _showDatePicker() {
-    final bool showTitleActions = false;
+    
+    DateTimePickerLocale locale = DateTimePickerLocale.en_us;
+    if (_lang.contains('zh')) {
+      locale = DateTimePickerLocale.zh_cn;
+    }
+
     DatePicker.showDatePicker(
       context,
-      showTitleActions: _showTitleActions,
-      minYear: 1970,
-      maxYear: 2020,
-      initialYear: _year,
-      initialMonth: _month,
-      initialDate: _date,
-      confirm:   Container(
-        color: Colors.white,
-        padding: EdgeInsets.only(left: 20,top: 10,bottom: 15,right: 20),
-        child: Text("确定",style: TextStyle(fontSize: 17,color: const Color(0xFFF95862),decoration: TextDecoration.none),)
-    ),
-      cancel: Text(
-        '取消',
-        style: TextStyle(color: Colors.cyan),
-      ),
-      locale: _lang,
+      minDateTime: DateTime(1970),
+      maxDateTime: DateTime(2030),
+      initialDateTime: DateTime(_year, _month, _date),
       dateFormat: _format,
-      onChanged: (year, month, date) {
-        debugPrint('onChanged date: $year-$month-$date');
-
-        if (!showTitleActions) {
-          _changeDatetime(year, month, date);
-        }
-      },
-      onConfirm: (year, month, date) {
-        _changeDatetime(year, month, date);
+      locale: locale,
+      onConfirm: (dateTime, List<int> index) {
+        _changeDatetime(dateTime.year, dateTime.month, dateTime.day);
       },
     );
   }

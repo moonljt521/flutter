@@ -1,5 +1,4 @@
 import 'package:english_words/english_words.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/MyFavorite.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';

@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 class TurnBox extends StatefulWidget {
   const TurnBox({
-    Key key,
+    Key? key,
     this.turns = .0, //旋转的“圈”数,一圈为360度，如0.25圈即90度
     this.speed = 200, //过渡动画执行的总时长
-    this.child
+    required this.child
   }) :super(key: key);
 
   final double turns;
@@ -18,7 +18,7 @@ class TurnBox extends StatefulWidget {
 
 class _TurnBoxState extends State<TurnBox>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _TurnBoxState extends State<TurnBox>
     if (oldWidget.turns != widget.turns) {
       _controller.animateTo(
         widget.turns,
-        duration: Duration(milliseconds: widget.speed??200),
+        duration: Duration(milliseconds: widget.speed),
         curve: Curves.easeOut,
       );
     }

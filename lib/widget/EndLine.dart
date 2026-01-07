@@ -12,7 +12,7 @@ class EndLine extends StatelessWidget {
             child: Divider(height: 10.0,),
             flex: 1,
           ),
-          Text("我是有底线的",style: TextStyle(color: Theme.of(context).accentColor),),
+          Text("我是有底线的",style: TextStyle(color: Theme.of(context).colorScheme.secondary),),
           Expanded(
             child: Divider(height: 10.0,),
             flex: 1,
@@ -34,7 +34,7 @@ class NoData extends StatelessWidget {
             child: Divider(height: 10.0,),
             flex: 1,
           ),
-          Text("暂无数据",style: TextStyle(color: Theme.of(context).accentColor),),
+          Text("暂无数据",style: TextStyle(color: Theme.of(context).colorScheme.secondary),),
           Expanded(
             child: Divider(height: 10.0,),
             flex: 1,

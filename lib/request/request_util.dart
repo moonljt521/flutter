@@ -3,22 +3,21 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_first_demo/http/Api.dart';
-import 'package:flutter_first_demo/http/HttpUtil.dart';
 
 class HttpUtil {
 
-  Dio _dio;
+  late Dio _dio;
 
   factory HttpUtil() => _getInstance();
   static HttpUtil get instance => _getInstance();
-  static HttpUtil _instance;
+  static HttpUtil? _instance;
 
   HttpUtil._internal(){
     _dio = new Dio();
     _dio.options
       ..baseUrl = Api.BaseUrl
-      ..connectTimeout = 10000
-      ..receiveTimeout = 3000;
+      ..connectTimeout = Duration(milliseconds: 10000)
+      ..receiveTimeout = Duration(milliseconds: 3000);
   }
 
   static HttpUtil _getInstance() {
@@ -26,13 +25,13 @@ class HttpUtil {
     if (_instance == null) {
       _instance = new HttpUtil._internal();
     }
-    return _instance;
+    return _instance!;
   }
 
   /**
    * y异步模式
    */
-  get(url, Function callBack , {params, options, cancelToken , Function errorCallBack}) async {
+  get(url, Function callBack , {params, options, cancelToken , Function? errorCallBack}) async {
     print('get请求启动! url： ${_dio.options.baseUrl}$url  , reqParams:$params' );
 
     Response response;
@@ -55,9 +54,9 @@ class HttpUtil {
 
       if(response.statusCode == 200){
         print('get请求成功!response.data：${response.data}');
-        if(callBack != null){
-          callBack(response.data['data']);
-        }
+        // Removed callback != null check
+        callBack(response.data['data']);
+        
       }else {
         String errorMsg = "网络请求错误,状态码:" + response.statusCode.toString();
         if(errorCallBack != null){
@@ -65,9 +64,9 @@ class HttpUtil {
         }
       }
 
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (CancelToken.isCancel(e)) {
-        print('get请求取消! ' + e.message);
+        print('get请求取消! ' + (e.message ?? ""));
       }
       print('get请求发生错误：$e');
       if(errorCallBack != null){
@@ -120,23 +119,25 @@ class HttpUtil {
       }else {
         String errorMsg = "网络请求错误,状态码:" + response.statusCode.toString();
 
-        return new Future.error(new DioError(
+        return new Future.error(new DioException(
+          requestOptions: response.requestOptions,
           response: response,
           message: errorMsg,
-          type: DioErrorType.RESPONSE
+          type: DioExceptionType.badResponse
         ));
       }
 
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (CancelToken.isCancel(e)) {
-        print('get请求取消! ' + e.message);
+        print('get请求取消! ' + (e.message ?? ""));
       }
       print('get请求发生错误：$e');
 
-      return new Future.error(new DioError(
-          response: response,
+      return new Future.error(new DioException(
+          requestOptions: e.requestOptions,
+          response: e.response,
           message: e.message,
-          type: DioErrorType.RESPONSE
+          type: DioExceptionType.badResponse
       ));
     }
   }
@@ -148,7 +149,7 @@ class HttpUtil {
     print('post请求启动! url： ${_dio.options.baseUrl}, $url  , reqParams:$params' );
 
     Response response;
-    ErrorBody errorBody;
+    ErrorBody errorBody = ErrorBody();
 
     if (params != null && params.isNotEmpty) {
       StringBuffer sb = StringBuffer("?");
@@ -175,18 +176,16 @@ class HttpUtil {
         return respData;
       }else {
         String errorMsg = "网络请求错误,状态码:" + response.statusCode.toString();
-        errorBody = ErrorBody();
         errorBody.errorMsg = errorMsg;
         return errorBody;
       }
 
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (CancelToken.isCancel(e)) {
-        print('post请求取消! ' + e.message);
-        errorBody = ErrorBody();
-        errorBody.errorMsg = e.message;
+        print('post请求取消! ' + (e.message ?? ""));
       }
       print('post请求发生错误：$e');
+      errorBody.errorMsg = e.message;
       return errorBody;
     }
   }
@@ -196,8 +195,8 @@ class HttpUtil {
 
     Response response;
     int _code;
-    String _msg;
-    T _data;
+    String _msg ="";
+    T? _data;
 
     if (params != null && params.isNotEmpty) {
       StringBuffer sb = StringBuffer("?");
@@ -219,28 +218,31 @@ class HttpUtil {
       if(response.statusCode == 200){
 
         _data = response.data['data'];
+        _code = response.statusCode ?? 200;
         return new BaseResp(_code, _msg, _data);
 
       }else {
         String errorMsg = "网络请求错误,状态码:" + response.statusCode.toString();
 
-        return new Future.error(new DioError(
+        return new Future.error(new DioException(
+            requestOptions: response.requestOptions,
             response: response,
             message: errorMsg,
-            type: DioErrorType.RESPONSE
+            type: DioExceptionType.badResponse
         ));
       }
 
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (CancelToken.isCancel(e)) {
-        print('post请求取消! ' + e.message);
+        print('post请求取消! ' + (e.message ?? ""));
       }
       print('post请求发生错误：$e');
 
-      return new Future.error(new DioError(
-          response: response,
-          message: 'post请求取消! ' + e.message,
-          type: DioErrorType.RESPONSE
+      return new Future.error(new DioException(
+          requestOptions: e.requestOptions,
+          response: e.response,
+          message: 'post请求取消! ' + (e.message ?? ""),
+          type: DioExceptionType.badResponse
       ));
     }
   }
@@ -250,7 +252,7 @@ class HttpUtil {
 class BaseResp<T> {
   int errorCode;
   String errorMsg;
-  T data;
+  T? data;
 
   BaseResp( this.errorCode, this.errorMsg, this.data);
 
@@ -263,4 +265,9 @@ class BaseResp<T> {
     sb.write('}');
     return sb.toString();
   }
+}
+
+class ErrorBody {
+   num? type ;
+   String? errorMsg;
 }

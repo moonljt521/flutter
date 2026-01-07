@@ -1,18 +1,11 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatefulWidget {
+  final String url;
+  final String title;
 
-  String _url;
-
-  String _title;
-
-  WebViewPage(String title, String url){
-    this._url = url;
-    this._title = title;
-  }
+  WebViewPage(this.title, this.url);
 
   @override
   State<StatefulWidget> createState() {
@@ -21,14 +14,21 @@ class WebViewPage extends StatefulWidget {
 }
 
 class _WebViewState extends State<WebViewPage> {
+  late final WebViewController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(widget.url));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget._title),),
-      body: WebviewScaffold(
-        url: widget._url,
-      ),
+      appBar: AppBar(title: Text(widget.title)),
+      body: WebViewWidget(controller: _controller),
     );
   }
-
 }

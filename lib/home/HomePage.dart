@@ -1,10 +1,7 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/home/ArticleItem.dart';
 import 'package:flutter_first_demo/constant/Constants.dart';
-import 'package:flutter_first_demo/home/wandroid_body.dart';
-import 'package:flutter_first_demo/http/Api.dart';
 import 'package:flutter_first_demo/request/request_manager.dart';
 import 'package:flutter_first_demo/request/request_util.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
@@ -20,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List listData = List();
+  List listData = [];
   var bannerData;
   var curPage = 0;
   var listTotalSize = 0;
@@ -71,7 +68,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (listData == null) {
+    if (listData.isEmpty && isLoading) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -101,30 +98,21 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  SlideView _bannerView;
+  SlideView? _bannerView;
 
   void getBanner() async{
 
     BaseResp<List> resp = await RequestManager.getWanAndroidBannerSync();
 
-    if (resp != null) {
+    
       setState(() {
         bannerData = resp.data;
-        _bannerView = SlideView(bannerData);
+        if(bannerData != null) {
+          _bannerView = SlideView(bannerData);
+        }
       });
-    }
+    
 
-
-//    await RequestManager.getWanAndroidBanner( (data){
-//      if (data != null) {
-//        setState(() {
-//          bannerData = data;
-//          _bannerView = SlideView(bannerData);
-//        });
-//      }
-//    } , errorCallBack: (error){
-//       Toast.toast(error);
-//    });
   }
 
   void getHomeArticlelist() async{
@@ -134,16 +122,17 @@ class _HomePageState extends State<HomePage> {
     });
 
     BaseResp<Map<String, dynamic>> resp = await RequestManager.getWanAndroidMainPageSync<Map<String,dynamic>>("$curPage");
-    if (resp != null) {
+    
+    if (resp.errorCode == 0 && resp.data != null) {
 
-      var _listData = resp.data['datas'] ;
+      var _listData = resp.data!['datas'] ;
 
-      listTotalSize = resp.data['total'];
+      listTotalSize = resp.data!['total'];
 
       setState(() {
         isLoading = false;
 
-        var list1 = List();
+        var list1 = [];
         if (curPage == 0) {
           listData.clear();
         }
@@ -159,41 +148,10 @@ class _HomePageState extends State<HomePage> {
       });
     }else{
       Toast.toast(resp.errorMsg);
+      setState(() {
+        isLoading = false;
+      });
     }
-
-
-//    RequestManager.getWanAndroidMainPage( "$curPage" ,(data){
-//      if (data != null) {
-//
-//        Map<String, dynamic> map = data;
-//
-//        var _listData = map['datas'];
-//
-//        listTotalSize = map["total"];
-//
-//        setState(() {
-//          isLoading = false;
-//
-//          var list1 = List();
-//          if (curPage == 0) {
-//            listData.clear();
-//          }
-//          curPage++;
-//
-//          list1.addAll(listData);
-//          list1.addAll(_listData);
-//          if (list1.length >= listTotalSize) {
-//            list1.add(Constants.END_LINE_TAG);
-//          }
-//          listData = list1;
-//        });
-//      }
-//    } , errorCallBack: (error){
-//      Toast.toast(error);
-//    });
-
-
-
 
   }
 
@@ -201,10 +159,14 @@ class _HomePageState extends State<HomePage> {
     if (i == 0) {
       return Container(
         height: 180.0,
-        child: _bannerView,
+        child: _bannerView ?? Container(),
       );
     }
     i -= 1;
+
+    if (i >= listData.length) {
+       return Container();
+    }
 
     var itemData = listData[i];
 

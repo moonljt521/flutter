@@ -1,5 +1,4 @@
 
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/widget/imageloader.dart';
@@ -13,7 +12,7 @@ class CachedNetWorkPage extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final String title;
+  final String? title;
   MyHomePage({this.title});
 
   @override
@@ -116,20 +115,21 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  _gridView() {
-    return new GridView.builder(
-        itemCount: 250,
-        gridDelegate:
-        new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        itemBuilder: (BuildContext context, int index) {
-          return new CachedNetworkImage(
-            imageUrl:
-            "http://via.placeholder.com/${(index + 1)}x${(index % 100 + 1)}",
-            placeholder: _loader,
-            errorWidget: _error,
-          );
-        });
-  }
+  // Unused method
+  // _gridView() {
+  //   return new GridView.builder(
+  //       itemCount: 250,
+  //       gridDelegate:
+  //       new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+  //       itemBuilder: (BuildContext context, int index) {
+  //         return new CachedNetworkImage(
+  //           imageUrl:
+  //           "http://via.placeholder.com/${(index + 1)}x${(index % 100 + 1)}",
+  //           placeholder: _loader,
+  //           errorWidget: _error,
+  //         );
+  //       });
+  // }
 
   Widget _loader(BuildContext context, String url) {
     return new Center(
@@ -137,7 +137,7 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget _error(BuildContext context, String url, Exception error) {
+  Widget _error(BuildContext context, String url, Object error) {
     print(error);
     return new Center(
       child: Icon(Icons.error),

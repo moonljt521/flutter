@@ -1,19 +1,15 @@
 
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/http/HttpUtil.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
-import 'package:flutter_first_demo/utils/Toast.dart';
 import 'package:flutter_first_demo/webview_container/webview_page.dart';
 
 class ItemNewsWidget extends StatefulWidget {
 
-  var itemData;
+  final dynamic itemData;
 
   ItemNewsWidget({
-      Key key,
-      @required this.itemData
+      Key? key,
+      required this.itemData
   }):super(key:key);
 
 

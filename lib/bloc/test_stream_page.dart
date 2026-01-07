@@ -51,8 +51,8 @@ class _CounterPageState extends State<CounterPage> {
 
 
 class CountBLoC {
-  int _count;
-  StreamController<int> _countController;
+  int _count = 0;
+  late StreamController<int> _countController;
 
   CountBLoC() {
     _count = 0;

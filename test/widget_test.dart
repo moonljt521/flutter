@@ -5,9 +5,6 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
-import 'package:flutter_first_demo/main_page.dart';
-//import 'package:flutter_test/flutter_test.dart';
 
 
 void main() {
@@ -19,28 +16,25 @@ void main() {
 
 _test(){
     List list = [1,3,4,5,];
-    list.forEach(
-            (a) {
+    for(var a in list) {
             if(a > 4){
                 print('$a');
                 return;
             }
         }
-    );
+    
 
     print("hello");
 }
 
 _test1(){
     List list = [1,3,4,5,];
-    list.forEach(
-            (a) {
+    for (var a in list) {
             if(a > 4){
                 print('$a');
                 return "1111";
             }
         }
-    );
 
     print("hello");
     return "2222";

@@ -1,17 +1,16 @@
 // 所有 BLoCs 的通用接口
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
 
 abstract class BlocBase {
   void dispose();
 }
 
 // 通用 BLoC provider
-class BlocProvider<T extends BlocBase> extends StatefulWidget {
+class BlocProvider<T extends BlocBase?> extends StatefulWidget {
   BlocProvider({
-    Key key,
-    @required this.child,
-    @required this.bloc,
+    Key? key,
+    required this.child,
+    required this.bloc,
   }): super(key: key);
 
   final T bloc;
@@ -21,18 +20,21 @@ class BlocProvider<T extends BlocBase> extends StatefulWidget {
   _BlocProviderState<T> createState() => _BlocProviderState<T>();
 
   static T of<T extends BlocBase>(BuildContext context){
-    final type = _typeOf<BlocProvider<T>>();
-    BlocProvider<T> provider = context.ancestorWidgetOfExactType(type);
-    return provider.bloc;
+    // final type = _typeOf<BlocProvider<T>>();
+    // BlocProvider<T> provider = context.ancestorWidgetOfExactType(type);
+    BlocProvider<T>? provider = context.findAncestorWidgetOfExactType<BlocProvider<T>>();
+    return provider!.bloc;
   }
 
   static Type _typeOf<T>() => T;
 }
 
-class _BlocProviderState<T> extends State<BlocProvider<BlocBase>>{
+class _BlocProviderState<T> extends State<BlocProvider<BlocBase?>>{
   @override
   void dispose(){
-    widget.bloc.dispose();
+    if (widget.bloc != null) {
+      widget.bloc!.dispose();
+    }
     super.dispose();
   }
 

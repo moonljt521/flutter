@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'operator.dart';
 
 typedef void PressOperationCallback(display);
 
 class Result {
   Result();
-  String firstNum;
-  String secondNum;
-  Operator oper;
-  num result;
+  String? firstNum;
+  String? secondNum;
+  Operator? oper;
+  num? result;
 }
 
 class ResultButton extends StatefulWidget {
-  ResultButton({@required this.display, @required this.color, this.onPress});
+  ResultButton({required this.display, required this.color, required this.onPress});
   final String display;
   final Color color;
   final PressOperationCallback onPress;
@@ -35,17 +34,17 @@ class ResultButtonState extends State<ResultButton> {
                 left: 10.0, right: 10.0, top: 10.0, bottom: 24.0),
             child: GestureDetector(
               onTap: () {
-                if (widget.onPress != null) {
-                  widget.onPress(widget.display);
-                  setState(() {
-                    pressed = true;
-                  });
-                  Future.delayed(
-                      const Duration(milliseconds: 200),
-                      () => setState(() {
-                            pressed = false;
-                          }));
-                }
+                // Removed null check for onPress
+                widget.onPress(widget.display);
+                setState(() {
+                  pressed = true;
+                });
+                Future.delayed(
+                    const Duration(milliseconds: 200),
+                    () => setState(() {
+                          pressed = false;
+                        }));
+                
               },
 
               // 复位键和 = 号
@@ -65,12 +64,12 @@ class ResultButtonState extends State<ResultButton> {
 
 class ResutlButtonText extends StatelessWidget {
 
-  Color color;
-  String display;
+  final Color color;
+  final String display;
 
   ResutlButtonText({
-    @required this.color,
-    @required this.display,
+    required this.color,
+    required this.display,
   }):super();
 
   @override
@@ -97,15 +96,16 @@ class ResutlButtonText extends StatelessWidget {
 
 
 class ResultDisplay extends StatelessWidget {
-  ResultDisplay({this.result});
+  ResultDisplay({required this.result});
   final String result;
   @override
   Widget build(BuildContext context) {
+    double scale = 7.5 / result.length > 1.0 ? 1.0 : 7.5 / result.length;
     return Text(
       '$result',
       softWrap: false,
       overflow: TextOverflow.fade,
-      textScaleFactor: 7.5 / result.length > 1.0 ? 1.0 : 7.5 / result.length,
+      textScaler: TextScaler.linear(scale),
       style: TextStyle(
           fontSize: 80.0, fontWeight: FontWeight.w500, color: Colors.black),
     );
@@ -113,15 +113,15 @@ class ResultDisplay extends StatelessWidget {
 }
 
 class HistoryBlock extends StatelessWidget {
-  HistoryBlock({this.result});
+  HistoryBlock({required this.result});
   final Result result;
   @override
   Widget build(BuildContext context) {
     var text = '';
     if (result.secondNum != null) {
-      text = '${result.firstNum} ${result.oper.display} ${result.secondNum}';
+      text = '${result.firstNum} ${result.oper!.display} ${result.secondNum}';
     } else if (result.oper != null) {
-      text = '${result.firstNum} ${result.oper.display} ?';
+      text = '${result.firstNum} ${result.oper!.display} ?';
     } else if (result.firstNum != null) {
       text = '${result.firstNum}';
     }
@@ -131,7 +131,7 @@ class HistoryBlock extends StatelessWidget {
         padding: EdgeInsets.all(5.0),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: result.oper != null ? result.oper.color : Colors.white54,
+            color: result.oper != null ? result.oper!.color : Colors.white54,
             borderRadius: BorderRadius.all(Radius.circular(16.0))),
         child:
             Text(text, style: TextStyle(fontSize: 27.0, color: Colors.black54)),

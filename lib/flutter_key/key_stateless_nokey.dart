@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/flutter_key/StatelessColorfulTile.dart';
 
@@ -13,7 +12,7 @@ class StatelessNoKey extends StatefulWidget {
 
 class _State1 extends State<StatelessNoKey> {
 
-  List<Widget> widgets;
+  late List<Widget> widgets;
 
   @override
   void initState() {

@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter_first_demo/bloc/BlocProvider.dart';
 
 class IncrementBloc implements BlocBase {
-  int _counter;
+  int _counter = 0;
 
   // 处理counter的stream
   StreamController<int> _counterController = StreamController<int>();

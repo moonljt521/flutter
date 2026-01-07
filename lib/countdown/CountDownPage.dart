@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_first_demo/countdown/progress.dart';
-import 'package:flutter_first_demo/login/LoginPage.dart';
-import 'package:flutter_first_demo/utils/RouterUtil.dart';
 
 class CountDownPage extends StatefulWidget {
   @override

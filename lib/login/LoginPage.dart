@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/utils/Toast.dart';
 
@@ -82,9 +81,9 @@ class LoginState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Container(
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: _login,
-                  highlightColor: Colors.red,
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   child: Text("登录"),
                 ),
                 margin: EdgeInsets.all(10),

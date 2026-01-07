@@ -10,7 +10,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.4 <3.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -18,30 +18,30 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  english_words: ^3.1.0  # 包含数千个最常用的英文单词以及一些实用功能.
-  http: '>=0.11.3+12'
+  cupertino_icons: ^1.0.6
+  english_words: ^4.0.0
+  http: ^1.1.0
 #  shared_preferences: "^0.4.1"
-  event_bus: "^1.0.1"
+  event_bus: ^2.0.0
 
 #  日历
-  flutter_cupertino_date_picker: "^0.3.0"
+  flutter_cupertino_datetime_picker: ^3.0.0
 #  适配
-  flutter_screenutil: ^0.3.0
+  flutter_screenutil: ^5.9.3
 #  ！！！
   dio: ^5.0.4
-  package_info: ^0.3.2
-#  rxDrat
-  rxdart: ^0.20.0
 
-  json_annotation: ^2.0.0
+#  rxDrat
+
+
+  json_annotation: ^4.8.1
 
 #  渐变文本
-  gradient_text: ^1.0.2
+
 
 # webview
-  flutter_webview_plugin: ^0.3.5
-  cached_network_image: ^1.0.0
+  webview_flutter: ^4.4.2
+  cached_network_image: ^3.3.1
 
   flutter_localizations:
       sdk: flutter
@@ -50,8 +50,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^1.0.0
-  json_serializable: ^2.0.0
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.1
 
 
 #  test: ^1.5.1

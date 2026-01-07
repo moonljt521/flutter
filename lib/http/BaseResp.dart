@@ -6,9 +6,9 @@
 
 class WanAndroidResp {
 
-  int errorCode;
+  int? errorCode;
 
-  String errorMsg;
+  String? errorMsg;
 
-  String data;
+  String? data;
 }

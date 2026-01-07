@@ -4,31 +4,28 @@ import 'package:flutter_first_demo/http/HttpUtil.dart';
 import 'package:flutter_first_demo/login/LoginPage.dart';
 import 'package:flutter_first_demo/utils/DataUtils.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
-import 'package:flutter_first_demo/utils/StringUtils.dart';
 import 'package:flutter_first_demo/webview_container/webview_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gradient_text/gradient_text.dart';
+import 'package:flutter_first_demo/widget/GradientText.dart';
 
 ///个人感觉条目比较复杂的话可以单独拿出来,而且可以复用.可以对比CollectListPage.dart中的item哪个更合理
 class ArticleItem extends StatefulWidget {
-  var itemData;
+  final dynamic itemData;
 
   //是否来自搜索列表
-  bool isSearch;
+  final bool isSearch;
   //搜索列表的id
-  String id;
+  final String? id;
 
-  ArticleItem(var itemData){
-    this.itemData = itemData;
-    this.isSearch =false;
-  }
+  const ArticleItem(this.itemData, {Key? key})
+      : isSearch = false,
+        id = null,
+        super(key: key);
 
   //命名构造函数,搜索列表的item和普通的item有些不一样
-  ArticleItem.isFromSearch(var itemData, String id) {
-    this.itemData = itemData;
-    this.isSearch = true;
-    this.id = id;
-  }
+  const ArticleItem.isFromSearch(this.itemData, this.id, {Key? key})
+      : isSearch = true,
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -90,7 +87,7 @@ class ArticleItemState extends State<ArticleItem> {
             Text('作者:  '),
             Text(
               widget.itemData['author'],
-              style: TextStyle(color: Theme.of(context).accentColor),
+              style: TextStyle(color: Theme.of(context).colorScheme.secondary),
             ),
           ],
         )),
@@ -102,17 +99,9 @@ class ArticleItemState extends State<ArticleItem> {
       children: <Widget>[
         Expanded(
           child:
-//          Text.rich(
-//            widget.isSearch
-//                ? StringUtils.getTextSpan(widget.itemData['title'], widget.id)
-//                : TextSpan(text: widget.itemData['title']),
-//            softWrap: true,
-//            style: TextStyle(fontSize: ScreenUtil().setSp(28,false), color: Colors.black),
-//            textAlign: TextAlign.left,
-//          ),
             GradientText(
                 widget.itemData['title'],
-               style: TextStyle(fontSize: ScreenUtil().setSp(28,false),),
+               style: TextStyle(fontSize: 28.sp,),
                gradient: LinearGradient(
                   colors: [Colors.deepPurple, Colors.deepOrange, Colors.pink , Colors.black12 ,Colors.lightGreenAccent]),
                 textAlign: TextAlign.left,
@@ -124,13 +113,12 @@ class ArticleItemState extends State<ArticleItem> {
     );
 
     Row chapterName = Row(
-//      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Expanded(
           child: Text(
             widget.isSearch ? '' : widget.itemData['chapterName'],
             softWrap: true,
-            style: TextStyle(color: Theme.of(context).accentColor),
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
             textAlign: TextAlign.left,
           ),
         ),

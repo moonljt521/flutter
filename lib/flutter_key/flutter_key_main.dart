@@ -1,5 +1,4 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/flutter_key/key_statefull_key.dart';
 import 'package:flutter_first_demo/flutter_key/key_statefull_nokey.dart';
@@ -17,16 +16,16 @@ class KeyPage extends StatelessWidget {
         children: <Widget>[
 
           MaterialButton(onPressed: (){
-            RouterUtil.route4Animation(context, StatelessNoKey(),RouterUtil.FADE);
+            RouterUtil.route4Animation(context, StatelessNoKey(), type: RouterUtil.FADE);
           } , child: Text("statelessWidget 无key"),),
 
           MaterialButton(onPressed: (){
-            RouterUtil.route4Animation(context, StateFullNoKey(),RouterUtil.FADE);
+            RouterUtil.route4Animation(context, StateFullNoKey(), type: RouterUtil.FADE);
           } , child: Text("statefullWidget 无key"),),
 
 
           MaterialButton(onPressed: (){
-            RouterUtil.route4Animation(context, StateFullKey(),RouterUtil.FADE);
+            RouterUtil.route4Animation(context, StateFullKey(), type: RouterUtil.FADE);
           } , child: Text("statefullWidget 有key"),),
 
         ],

@@ -1,19 +1,16 @@
 import 'package:english_words/english_words.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_first_demo/utils/RouterUtil.dart';
 
 class MyFavorite extends StatefulWidget {
 
-  String title;
-  Set<WordPair> mSaved;
+  final String title;
+  final Set<WordPair> mSaved;
 
-  BuildContext mContext ;
-
-  MyFavorite({
-     Key key,
-     @required this.title,
-     @required this.mSaved,
+  const MyFavorite({
+     Key? key,
+     required this.title,
+     required this.mSaved,
   }):super(key:key);
 
   @override

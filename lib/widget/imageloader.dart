@@ -6,21 +6,21 @@ class GlideWidget extends StatefulWidget {
 
   final String imageUrl;
   final bool clipOval ;
-  final double width ;
-  final double height ;
-  final String placeIcon;
-  final String errorIcon;
+  final double? width ;
+  final double? height ;
+  final String? placeIcon;
+  final String? errorIcon;
   final double radius;
 
   GlideWidget({
-      Key key,
+      Key? key,
       this.clipOval = false,
       this.width,
       this.height,
       this.placeIcon,
       this.errorIcon,
       this.radius = 0,
-      @required this.imageUrl}) :
+      required this.imageUrl}) :
         super(key : key);
 
   @override
@@ -36,7 +36,7 @@ class _GlideState extends State<GlideWidget> {
   }
 
   Widget _clipRRect() {
-    if(widget.radius == null || widget.radius == 0) return _child();
+    if(widget.radius == 0) return _child();
     return ClipRRect(
       borderRadius: BorderRadius.circular(widget.radius),
       child: _child(),
@@ -49,21 +49,19 @@ class _GlideState extends State<GlideWidget> {
         height: widget.height,
         child: CachedNetworkImage(
           fit: BoxFit.cover,
-          placeholder: (context , url) => _placeWidget(widget.placeIcon,),
-          errorWidget :(context, url, error) => _errorWidget(widget.errorIcon),
+          placeholder: (widget.placeIcon != null) ? (context , url) => _placeWidget(widget.placeIcon!,) : null,
+          errorWidget :(widget.errorIcon != null) ? (context, url, error) => _errorWidget(widget.errorIcon!) : null,
           imageUrl: widget.imageUrl,
         )
     );
   }
 
   Widget _placeWidget(String placeHolder){
-    if(placeHolder != null) return Image.asset(placeHolder);
-    return Container();
+    return Image.asset(placeHolder);
   }
 
   Widget _errorWidget(String errorHolder){
-    if(errorHolder != null) return Image.asset(errorHolder);
-    return Container();
+    return Image.asset(errorHolder);
   }
 
 }
